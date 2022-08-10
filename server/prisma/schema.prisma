@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Expense {
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now())
+  name        String      @db.VarChar(150)
+  amount      Float
+  type        ExpensesType
+  category    ExpenseCategory    @relation(fields:[categoryId], references: [id])
+  categoryId  Int
+  user        User  @relation(fields: [userId], references: [id])
+  userId      Int
+}
+
+model ExpenseCategory {
+  id          Int         @id @default(autoincrement())
+  name        String      @unique
+  type        CategoryType
+  expenses    Expense[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+  password  String?
+  role      Role@default(user)
+  expenses  Expense[]
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum ExpensesType {
+  expenseType
+  incomeType
+}
+
+enum CategoryType {
+  expensesCategory
+  incomesCategory
+}
+
+
+
+
+// model Expense {
+//   id          Int         @id @default(autoincrement())
+//   createdAt   DateTime    @default(now())
+//   name        String      @db.VarChar(150)
+//   amount      Float
+//   category    ExpenseCategory    @relation(fields:[categoryId], references: [id])
+//   categoryId  Int
+//   user        User  @relation(fields: [userId], references: [id])
+//   userId      Int
+// }
+
+// model Income {
+//   id          Int         @id @default(autoincrement())
+//   createdAt   DateTime    @default(now())
+//   name        String      @db.VarChar(150)
+//   amount      Float
+//   category    IncomeCategory    @relation(fields:[categoryId], references: [id])
+//   categoryId  Int
+//   user        User  @relation(fields: [userId], references: [id])
+//   userId      Int
+// }
+
+// model ExpenseCategory {
+//   id          Int         @id @default(autoincrement())
+//   name        String      @unique
+//   expenses    Expense[]
+// }
+
+// model IncomeCategory {
+//   id          Int         @id @default(autoincrement())
+//   name        String      @unique
+//   income      Income[]
+// }
+
+// model User {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   email     String   @unique
+//   name      String?
+//   password  String?
+//   role      String?    
+//   expenses  Expense[]
+//   income    Income[]
+// }
