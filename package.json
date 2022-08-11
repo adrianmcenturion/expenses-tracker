@@ -5,7 +5,7 @@
   "scripts": {
     "build": "prisma generate",
     "dev": "PORT=3000 node src/index.js",
-    "start": "node src/index.js"
+    "start": "node server/src/index.js"
   },
   "dependencies": {
     "@prisma/client": "3.14.0",
