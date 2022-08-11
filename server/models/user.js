@@ -1,3 +1,4 @@
+const { Role } = require('@prisma/client');
 const prisma = require('../utils/prismaClient')
 
 const createUser = async (name, email, password, role) => {
@@ -7,7 +8,7 @@ const createUser = async (name, email, password, role) => {
         name: name,
         email: email,
         password: password,
-        role: role      
+        role: role === 'admin' ? Role.admin : Role.user      
       }
     });
     
@@ -22,7 +23,7 @@ const findUserByEmail = async (email) => {
   try {
       const user = await prisma.user.findUnique({
           where: {
-              email
+              email: email,
           }
       });
       return user;
@@ -32,11 +33,21 @@ const findUserByEmail = async (email) => {
   }
 }
 
+const getUsers = async () => {
+  try {
+    const users = await prisma.user.findMany()
+      return users
+    
+  } catch (error) {
+    throw new Error("Error finding users");
+  }
+}
+
 const deleteUserById = async (id) => {
   try {
-      const deletedUser = await prisma.user.delete({
+      const deletedUser = await prisma.user.deleteMany({
           where: {
-              id: id                 
+              id             
           }
       })
       return deletedUser;
@@ -47,4 +58,4 @@ const deleteUserById = async (id) => {
 }
 
 
-module.exports = { createUser, findUserByEmail, deleteUserById };
+module.exports = { createUser, findUserByEmail, deleteUserById, getUsers };

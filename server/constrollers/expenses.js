@@ -49,8 +49,9 @@ const findExpenseByName = async (req, res, next) => {
 const getByCategory = async (req, res, next) => {
 
     try {
+        const user = req.user
         const category = req.body.category
-        const getExpenses = await expense.getByCategory(category)
+        const getExpenses = await expense.getByCategory(category, user.email)
         res.send(getExpenses)
     } catch (err) {
         console.log(err)
@@ -60,9 +61,9 @@ const getByCategory = async (req, res, next) => {
 }
 
 const showAllMovements = async (req, res, next) => {
-
     try {
-        const allMovements = await expense.showAllMovements()
+        const user = req.user
+        const allMovements = await expense.showAllMovements(user.email)
         res.send(allMovements)
     } catch (err) {
         console.log(err)
@@ -71,11 +72,11 @@ const showAllMovements = async (req, res, next) => {
     }
 }
 
-const showAllExpenses = async (req, res, next) => {
-
+const showLastMovements = async (req, res, next) => {
     try {
-        const allExpenses = await expense.showAllExpenses()
-        res.send(allExpenses)
+        const user = req.user
+        const showLastMovements = await expense.showLastMovements(user.email)
+        res.send(showLastMovements)
     } catch (err) {
         console.log(err)
         res.statusCode = 500
@@ -83,21 +84,10 @@ const showAllExpenses = async (req, res, next) => {
     }
 }
 
-const showAllIncomes = async (req, res, next) => {
-
+const getBalance = async (req, res, next) => {
     try {
-        const allIncomes = await expense.showAllIncomes()
-        res.send(allIncomes)
-    } catch (err) {
-        console.log(err)
-        res.statusCode = 500
-        res.send(err.message)
-    }
-}
-
-const getTotalAmount = async (req, res, next) => {
-    try {
-        const total = await expense.getTotalAmount()
+        const user = req.user
+        const total = await expense.getBalance(user.email)
         res.send(total)
     } catch (err) {
         console.log(err)
@@ -108,9 +98,27 @@ const getTotalAmount = async (req, res, next) => {
 
 const getTotalAmountByCategory = async (req, res, next) => {
     try {
+        const user = req.user
         const category = req.body.category
-        const total = await expense.getTotalAmountByCategory(category)
+        const total = await expense.getTotalAmountByCategory(category, user.email)
         res.send(total)
+    } catch (err) {
+        console.log(err)
+        res.statusCode = 500
+        res.send(err.message)
+    }
+}
+
+const deleteExpense = async (req, res, next) => {
+    
+    const id = req.body.id
+    const user = req.user
+
+    try {
+        const expenseDeleted = await expense.deleteExpense(id, user.email)
+        res.statusCode = 200
+        res.send(expenseDeleted)
+        
     } catch (err) {
         console.log(err)
         res.statusCode = 500
@@ -126,4 +134,4 @@ const nameIsValid = (name) => {
 
 
 
-module.exports = { createExpense, findExpenseByName, showAllExpenses, showAllIncomes, showAllMovements, getByCategory, getTotalAmount, getTotalAmountByCategory}
+module.exports = { createExpense, findExpenseByName, showLastMovements, showAllMovements, getByCategory, getBalance, getTotalAmountByCategory, deleteExpense}

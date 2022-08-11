@@ -12,32 +12,31 @@ router.post('/create', userLoggedIn, expensesController.createExpense)
 
 // search expense by name
 
-router.get('/search/name', expensesController.findExpenseByName )
+router.get('/search/name', userLoggedIn, expensesController.findExpenseByName )
 
 // show all movements
 
-router.get('/all', expensesController.showAllMovements)
+router.get('/', userLoggedIn, expensesController.showAllMovements)
 
+//show last movements
 
-// show all expenses
-
-router.get('/all/expenses', expensesController.showAllExpenses)
-
-// show all incomes
-
-router.get('/all/incomes', expensesController.showAllIncomes)
+router.get('/last', userLoggedIn, expensesController.showLastMovements)
 
 // search expense by category
 
-router.get('/search/category', expensesController.getByCategory )
+router.get('/search/category', userLoggedIn, expensesController.getByCategory )
 
-// get total amount
+// get balance
 
-router.get('/total', expensesController.getTotalAmount)
+router.get('/balance', userLoggedIn, expensesController.getBalance)
 
-// get category total amount
+// get category balance
 
-router.get('/total/category', expensesController.getTotalAmountByCategory )
+router.get('/balance/category', userLoggedIn, expensesController.getTotalAmountByCategory )
+
+//delete a expense
+
+router.delete('/delete', userLoggedIn, expensesController.deleteExpense)
 
 
 

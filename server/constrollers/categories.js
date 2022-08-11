@@ -11,7 +11,7 @@ const createCategory = async (req, res, next) => {
         return
     }
 
-    if (await categoryAlreadyExists(name, type)) {
+    if (await categoryAlreadyExists(name)) {
         res.statusCode = 404
         res.send('Category already exists')
         return
@@ -42,10 +42,10 @@ const showAll = async (req, res, next) => {
 const deleteCategory = async (req, res, next) => {
 
     const name = req.body.name
-    const type = req.body.type
 
     try {
-        const categoryDeleted = await category.deleteCategory(name, type)
+        const categoryDeleted = await category.deleteCategory(name)
+        res.statusCode = 200
         res.send(categoryDeleted)
         
     } catch (error) {
@@ -57,8 +57,8 @@ const nameIsValid = (name) => {
     return name !== ''
 }
 
-const categoryAlreadyExists = async (name, type) => {
-    const categoryByName = await category.findByName(name, type);
+const categoryAlreadyExists = async (name) => {
+    const categoryByName = await category.findByName(name);
     return categoryByName.length > 0;
   };
 
