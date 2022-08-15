@@ -125,7 +125,7 @@ const showLastMovements = async (email) => {
             }, 
             orderBy: {
                 createdAt: 'desc',
-            }, take: 10
+            }, take: 5
         })
 
         return movements

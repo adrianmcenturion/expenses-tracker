@@ -5,7 +5,8 @@
   "scripts": {
     "build": "prisma generate",
     "dev": "PORT=3000 node src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "deploy": "git subtree push --prefix server heroku master"
   },
   "dependencies": {
     "@prisma/client": "3.14.0",
