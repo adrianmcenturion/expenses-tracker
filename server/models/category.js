@@ -22,9 +22,19 @@ const create = async (name, type) => {
 
 const showAll = async () => {
     try {
-        const expensesCategories = await prisma.expenseCategory.findMany()
+        const expensesCategories = await prisma.expenseCategory.findMany({
+            where: {
+                type: CategoryType.expensesCategory
+            }
+        })
+
+        const incomesCategories = await prisma.expenseCategory.findMany({
+            where: {
+                type: CategoryType.incomesCategory
+            }
+        })
         
-        return expensesCategories
+        return {expenses: expensesCategories, incomes: incomesCategories}
     } catch (err) {
         console.error(err)
         throw new Error(err)
