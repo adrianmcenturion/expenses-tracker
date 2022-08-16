@@ -5,18 +5,15 @@ import Transactions from "./transactions";
 import { useEffect } from "react";
 import { getBalance } from "../../../redux/states/expenses";
 import Example from "./chart";
-import { ExpensesFilter } from "../../../utils/expensesFilter";
 
 const Layout = () => {
   const dispatch = useDispatch()
   const token = useSelector(state => state.auth.token)
-  const { balance, expense, income, transactions, success, movements } = useSelector(state => state.expenses)
-  
-  movements && ExpensesFilter()
-  useEffect(() => {
+  const { balance, expense, income, transactions, success } = useSelector(state => state.expenses)
+ 
+  useEffect((token, dispatch) => {
     if(token)
     dispatch(getBalance(token))
-    // eslint-disable-next-line
   }, [token, success]);
 
 

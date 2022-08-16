@@ -69,8 +69,8 @@ export const ExpensesEmptyState = {
     //action type string
     'expenses/add',
     // callback function
-    async ({name, amount, category, type, token}, thunkAPI) => {
-      const res = await AxiosInstance.post('/expenses/create', { name, amount, category, type }, {
+    async ({name, date, amount, category, type, token}, thunkAPI) => {
+      const res = await AxiosInstance.post('/expenses/create', { name, date, amount, category, type }, {
         headers: {
             Authorization: `Bearer ${token}`
         }  

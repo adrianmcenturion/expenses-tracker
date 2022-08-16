@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addExpense } from '../../../redux/states/expenses';
 import { getCategories } from '../../../redux/states/categories';
 import { useEffect, useState } from 'react';
+import moment from 'moment';
 
 
 export const AddTransactionModal = ({isOpen, onClose}) => {
@@ -23,21 +24,22 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
         e.preventDefault();
         const data = {
             name: e.target.name.value,
+            date:  moment.utc(e.target.date.value).format('YYYY-MM-DD'),
             amount: +e.target.amount.value,
             category: +e.target.category.value,
-            type: e.target.type.value,
+            type: type === 'type-expense' ? 'expense' : 'income',
             token: token
         }
+
         if(token)
         dispatch(addExpense(data))
         if(success) onClose()
     }
 
-    useEffect(() => {
-      if(token)
-      dispatch(getCategories(token))
-      // eslint-disable-next-line
-    }, [token]);
+    useEffect((token, dispatch) => {
+        if(token)
+        dispatch(getCategories(token))
+    }, []);
 
     return (
         <Modal isCentered isOpen={isOpen} onClose={onClose} >
@@ -51,7 +53,7 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
           <ModalBody>
             <Flex flexDirection={'column'} p={4} gap={4} as='form' id='new-form' onSubmit={handleSubmit}>
                 <FormControl id='type'>
-                    <RadioGroup defaultValue='expense' name='type' onClick={handleChange}>
+                    <RadioGroup defaultValue='expense' name='type' id='type' onClick={handleChange}>
                         <HStack spacing='24px'>
                             <Radio  name='type-expense' value='expense' id='type-expense'>Expense</Radio>
                             <Radio  name='type-income' value='income' id='type-income'>Income</Radio>
@@ -62,7 +64,7 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
                 <FormControl isRequired>
                     <FormLabel>Category</FormLabel>
                     <Select placeholder='Select a category' name='category' textTransform={'Capitalize'}>
-                        {type === 'type-expense' ? expenses.map((expense, key) => <option key={key} id={expense.id}>{expense.name}</option>) : incomes.map((incomes, key) => <option key={key} id={incomes.id}>{incomes.name}</option>)}
+                        {type === 'type-expense' ? expenses.map((expense, key) => <option key={key} value={expense.id}>{expense.name}</option>) : incomes.map((incomes, key) => <option key={key} value={incomes.id}>{incomes.name}</option>)}
                     </Select>
                     </FormControl>
                     <FormControl isRequired>
@@ -79,6 +81,14 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
                 <FormControl isRequired>
                     <FormLabel>Name</FormLabel>
                     <Input name='name' placeholder='Name' />
+                </FormControl>
+                <FormControl >
+                <Input
+                      name='date'
+                      placeholder="Select Date and Time"
+                      size="md"
+                      type="date"
+                      />
                 </FormControl>
             </Flex>
           </ModalBody>
