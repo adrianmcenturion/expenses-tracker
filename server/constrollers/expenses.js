@@ -4,6 +4,7 @@ const expense = require('../models/expense')
 const createExpense = async (req, res, next) => {
 
     const name = req.body.name;
+    const date = (req.body.date) ? new Date(+req.body.date) : new Date()
     const amount = req.body.amount;
     const category = req.body.category;
     const user = req.user
@@ -16,7 +17,7 @@ const createExpense = async (req, res, next) => {
     }
 
     try {
-        const newExpense = await expense.create(name, amount, category, user.email, type)
+        const newExpense = await expense.create(name, date, amount, category, user.email, type)
         res.send(newExpense)
     }catch (err) {
         console.log(err)
@@ -99,8 +100,8 @@ const getBalance = async (req, res, next) => {
 const getTotalAmountByCategory = async (req, res, next) => {
     try {
         const user = req.user
-        const category = req.body.category
-        const total = await expense.getTotalAmountByCategory(category, user.email)
+        // const category = req.body.category
+        const total = await expense.getTotalAmountByCategory(user.email)
         res.send(total)
     } catch (err) {
         console.log(err)

@@ -1,13 +1,15 @@
 const { ExpensesType } = require('@prisma/client');
 const prisma = require('../utils/prismaClient');
+const { showAll } = require('./category');
 
-const create = async (name, amount, categoryId, email, type) => {
+const create = async (name, date, amount, categoryId, email, type) => {
     
     try {
 
         const newExpense = await prisma.expense.create({
             data: {
                 name: name,
+                date: date,
                 amount: amount,
                 type: (type === 'expense') ? ExpensesType.expenseType : ExpensesType.incomeType,
                 category: {
@@ -40,7 +42,7 @@ const findByName = async (name) => {
             select: {
                 name: true,
                 amount: true,
-                createdAt: true,
+                date: true,
                 ExpenseCategory: true
             }
         })
@@ -65,7 +67,7 @@ const getByCategory = async (category, email) => {
             select: {
                 name: true,
                 amount: true,
-                createdAt: true,
+                date: true,
                 category: true,
             },
         })
@@ -91,12 +93,12 @@ const showAllMovements = async (email) => {
                 id: true,
                 name: true,
                 amount: true,
-                createdAt: true,
+                date: true,
                 type: true,
                 category: true
             }, 
             orderBy: {
-                createdAt: 'desc',
+                date: 'desc',
             },  
         })
         return expenses
@@ -119,12 +121,12 @@ const showLastMovements = async (email) => {
             select: {
                 name: true,
                 amount: true,
-                createdAt: true,
+                date: true,
                 type: true,
                 category: true
             }, 
             orderBy: {
-                createdAt: 'desc',
+                date: 'desc',
             }, take: 5
         })
 
@@ -168,23 +170,28 @@ const getBalance = async (email) => {
     }
 }
 
-const getTotalAmountByCategory = async (category, email) => {
+const getTotalAmountByCategory = async (email) => {
 
     try {
+
+        const expensesCategories = await prisma.expense.groupBy({
+            by: ['categoryId'],
+            where: {
+                user: {
+                        email: email,
+                    },
+
+            },_sum: {
+                amount: true,
+            },
+        })
         
-        const arr = await getByCategory(category, email)
-    
-        let sum = 0
-        for(let i = 0; i < arr.length; i++) {
-            sum += arr[i].amount   
-        }
-    
-        return  {category: arr[0].category.name, total: sum}
+        return expensesCategories
+
     } catch (err) {
         console.log(err)
         throw new Error(err)
     }
-
 
 }
 

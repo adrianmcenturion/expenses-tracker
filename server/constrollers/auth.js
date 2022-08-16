@@ -53,7 +53,7 @@ const loginUser = async (req, res, next) => {
     return;
   }
 
-  const accessToken = signToken(user, process.env.ACCESS_TOKEN_SECRET, 600);
+  const accessToken = signToken(user, process.env.ACCESS_TOKEN_SECRET, 60 * 10 * 24);
   try {
     res.json({ accessToken: accessToken });
     return;
@@ -66,6 +66,19 @@ const loginUser = async (req, res, next) => {
 const getUsers = async (req, res, next) => {
   try {
     const user = await users.getUsers()
+    res.send(user)
+    res.status(200)
+    
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+    return;
+  }
+}
+
+const getUserInfo = async (req, res, next) => {
+  try {
+    const email = req.user.email; 
+    const user = await users.getUserInfo(email)
     res.send(user)
     res.status(200)
     
@@ -127,4 +140,4 @@ const getUserRole = (user) => {
   return "none";
 };
 
-module.exports = { registerUser, loginUser, deleteUserById, getUsers };
+module.exports = { registerUser, loginUser, deleteUserById, getUsers, getUserInfo };

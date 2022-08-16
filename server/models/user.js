@@ -43,6 +43,26 @@ const getUsers = async () => {
   }
 }
 
+const getUserInfo = async (email) => {
+  try {
+    const user = await prisma.user.findUnique({
+        where: {
+          email: email 
+        },
+        select: {
+          name: true,
+          email: true,
+          role: true,
+          id: true,
+        }
+    });
+    return user;
+
+    } catch (error) {
+        throw new Error("Error finding user");
+    }
+}
+
 const deleteUserById = async (id) => {
   try {
       const deletedUser = await prisma.user.deleteMany({
@@ -58,4 +78,4 @@ const deleteUserById = async (id) => {
 }
 
 
-module.exports = { createUser, findUserByEmail, deleteUserById, getUsers };
+module.exports = { createUser, findUserByEmail, deleteUserById, getUsers, getUserInfo };
