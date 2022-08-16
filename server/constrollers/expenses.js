@@ -4,7 +4,7 @@ const expense = require('../models/expense')
 const createExpense = async (req, res, next) => {
 
     const name = req.body.name;
-    const date = (req.body.date) ? new Date(+req.body.date) : new Date()
+    const date = new Date(req.body.date)
     const amount = req.body.amount;
     const category = req.body.category;
     const user = req.user
