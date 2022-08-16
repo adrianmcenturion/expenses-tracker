@@ -11,10 +11,11 @@ const Layout = () => {
   const token = useSelector(state => state.auth.token)
   const { balance, expense, income, transactions, success } = useSelector(state => state.expenses)
  
-  useEffect((token, dispatch) => {
+  useEffect(() => {
     if(token)
     dispatch(getBalance(token))
-  }, [token, success]);
+
+  }, [token, success]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
   return (

@@ -11,11 +11,11 @@ const Transactions = () => {
     const token = useSelector(state => state.auth.token)
     const {movements, success} = useSelector(state => state.expenses)
 
-    useEffect((token, dispatch) => {
+    useEffect(() => {
         if(token)
         dispatch(getLastMovements(token))
         
-    }, [token, success]);
+    }, [token, success]); // eslint-disable-line react-hooks/exhaustive-deps
 
     
 

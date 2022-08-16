@@ -31,15 +31,16 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
             token: token
         }
 
+        console.log(data)
         if(token)
         dispatch(addExpense(data))
         if(success) onClose()
     }
 
-    useEffect((token, dispatch) => {
+    useEffect(() => {
         if(token)
-        dispatch(getCategories(token))
-    }, []);
+        dispatch(getCategories(token))  
+    }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <Modal isCentered isOpen={isOpen} onClose={onClose} >
