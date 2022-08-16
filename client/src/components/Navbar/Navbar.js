@@ -2,6 +2,7 @@ import { Box, Flex, HStack, Link, Container, IconButton, Button, useDisclosure, 
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
+import { useSelector } from "react-redux";
   
   const Links = ['home', 'login', 'register', 'admin'];
   
@@ -25,11 +26,12 @@ import { Link as RouteLink } from "react-router-dom";
   export default function Simple() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
+    const token = useSelector(state => state.auth.token)
   
     return (
       <>
-        <Box  id='home' bg={useColorModeValue('gray.100', 'gray.900')}>
-          <Flex w={'100%'}  py={2} >
+        <Box  id='home' bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
+          <Flex w={'100%'} py={2} >
           <Container maxW={'container.lg'}>
           <IconButton
               size={'md'}
@@ -46,7 +48,7 @@ import { Link as RouteLink } from "react-router-dom";
                 display={{ base: 'none', md: 'flex' }}>
                 <Spacer />
                 {Links.map((link) => (
-                  <NavLink key={link}>{link}</NavLink>
+                  token && (link === 'register' || link === 'login') ? null : <NavLink key={link}>{link}</NavLink>
                 ))}
                 <Spacer />
               <Button onClick={toggleColorMode}>
@@ -60,7 +62,7 @@ import { Link as RouteLink } from "react-router-dom";
             <Box pb={4} px={4} display={{ md: 'none' }}>
               <Stack as={'nav'} spacing={4} >
                 {Links.map((link) => (
-                  <NavLink key={link}>{link}</NavLink>
+                  token && (link === 'register' || link === 'login') ? null : <NavLink key={link}>{link}</NavLink>
                 ))}
                 
               </Stack>

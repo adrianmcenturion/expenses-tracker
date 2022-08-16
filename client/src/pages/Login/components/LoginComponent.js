@@ -1,42 +1,60 @@
-import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button, Heading, Text, useColorModeValue, } from '@chakra-ui/react';
-  
+import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button, Heading, useColorModeValue, useToast} from '@chakra-ui/react';
+import { Link as RouteLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { Login } from '../../../redux/states/auth';
+import { toasts } from '../../../components/toasts';
+
   const LoginComponent = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const {loading} = useSelector((state) => state.auth)
+    const toast = useToast()
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const data = {email: e.target.email.value, password: e.target.password.value}
+      dispatch(Login(data))
+      toast(toasts)
+      
+      !loading && navigate('/home')
+      
+    }
+
     return (
       <Flex
-        minH={'100vh'}
         align={'center'}
-        justify={'center'}
-        bg={useColorModeValue('gray.50', 'gray.800')}>
+        justify={'center'}>
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-            <Text fontSize={'lg'} color={'gray.600'}>
-              to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
-            </Text>
           </Stack>
           <Box
             rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
+            bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}
             boxShadow={'lg'}
             p={8}>
-            <Stack spacing={4}>
+            <Stack spacing={4}
+            as='form'
+            onSubmit={handleSubmit}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} type="email" name='email'/>
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} type="password" />
               </FormControl>
               <Stack spacing={10}>
                 <Stack
                   direction={{ base: 'column', sm: 'row' }}
                   align={'start'}
                   justify={'space-between'}>
-                  <Checkbox>Remember me</Checkbox>
-                  <Link color={'blue.400'}>Forgot password?</Link>
+                  <Checkbox borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>Remember me</Checkbox>
+                  <Link as={RouteLink} to={'/register'} color={'blue.400'}>Don't have an account?</Link>
                 </Stack>
                 <Button
+                  isLoading={loading}
+                  loadingText='Submitting'
+                  type='submit'
                   bg={'blue.400'}
                   color={'white'}
                   _hover={{

@@ -1,15 +1,17 @@
-import { Flex, Spacer, Text, Input } from '@chakra-ui/react'
+import { Flex, Spacer, Text, Button, useDisclosure } from '@chakra-ui/react'
+import { AddTransactionModal } from './modal'
 
 const Dashboard = () => {
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
+
+
   return (
-    <Flex justifyContent={'space-between'} align="center" p={2}>
+    <Flex justifyContent={'space-between'} align="center" p={4}>
         <Text fontSize={'lg'}>Dashboard</Text>
         <Spacer />
-        <Input
-            maxW={'200px'}
-            size="sm"
-            type="datetime-local"
-            />
+        <Button onClick={onOpen}>Add Transactions</Button>
+        <AddTransactionModal onClose={onClose} isOpen={isOpen} />
     </Flex>
   )
 }

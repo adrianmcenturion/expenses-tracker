@@ -3,8 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 export const AppEmptyState = {
     isLoading: false,
     data: false,
-    auth: false,
-    admin: false,
   }
 
   export const appSlice = createSlice({

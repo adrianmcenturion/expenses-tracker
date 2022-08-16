@@ -1,12 +1,25 @@
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const theme = extendTheme({
+  components: {
+    Radio: { // can be Radio
+      baseStyle: {
+        container: {
+          touchAction: 'none',
+        },
+      },
+    },
+  },
+});
+
 root.render(
-  <ChakraProvider >
+  <ChakraProvider theme={extendTheme(theme)}>
     <App />
   </ChakraProvider>
 );
