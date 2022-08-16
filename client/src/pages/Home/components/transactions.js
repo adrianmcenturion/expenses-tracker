@@ -13,7 +13,7 @@ const Transactions = () => {
     useEffect(() => {
         if(token)
         dispatch(getLastMovements(token))
-
+        // eslint-disable-next-line
     }, [token, success]);
 
     

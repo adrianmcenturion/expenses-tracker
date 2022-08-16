@@ -36,6 +36,7 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
     useEffect(() => {
       if(token)
       dispatch(getCategories(token))
+      // eslint-disable-next-line
     }, [token]);
 
     return (

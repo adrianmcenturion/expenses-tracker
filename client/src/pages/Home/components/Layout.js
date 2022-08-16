@@ -16,7 +16,7 @@ const Layout = () => {
   useEffect(() => {
     if(token)
     dispatch(getBalance(token))
-    
+    // eslint-disable-next-line
   }, [token, success]);
 
 
