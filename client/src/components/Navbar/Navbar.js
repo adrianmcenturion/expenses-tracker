@@ -31,32 +31,32 @@ import { useSelector } from "react-redux";
     return (
       <>
         <Box  id='home' bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
-          <Flex w={'100%'} py={2} >
           <Container maxW={'container.lg'}>
-          <IconButton
-              size={'md'}
-              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-              aria-label={'Open Menu'}
-              display={{ md: 'none' }}
-              onClick={isOpen ? onClose : onOpen}
-            />
-          <HStack
-                justify="center"
-                gap={12}
-                as={'nav'}
-                spacing={8}
-                display={{ base: 'none', md: 'flex' }}>
-                <Spacer />
-                {Links.map((link) => (
-                  token && (link === 'register' || link === 'login') ? null : <NavLink key={link}>{link}</NavLink>
-                ))}
-                <Spacer />
-              <Button onClick={toggleColorMode}>
-                  {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                </Button>
+          <Flex w={'100%'} py={2} justifyContent={'space-between'}>
+            <IconButton
+                size={'md'}
+                icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                aria-label={'Open Menu'}
+                display={{ md: 'none' }}
+                onClick={isOpen ? onClose : onOpen}
+              />
+            <HStack
+                  justify="center"
+                  gap={12}
+                  as={'nav'}
+                  spacing={8}
+                  display={{ base: 'none', md: 'flex' }}>
+                  <Spacer />
+                  {Links.map((link) => (
+                    token && (link === 'register' || link === 'login') ? null : <NavLink key={link}>{link}</NavLink>
+                  ))}
               </HStack>
-              </Container>
-          </Flex>
+              <Spacer />
+                  <Button onClick={toggleColorMode}>
+                      {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
+                  </Button>
+            </Flex>
+            </Container>
           
           {isOpen ? (
             <Box pb={4} px={4} display={{ md: 'none' }}>

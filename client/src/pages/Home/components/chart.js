@@ -2,8 +2,9 @@ import React, { PureComponent, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 import { getCategoryBalance } from '../../../redux/states/expenses';
 import { useDispatch, useSelector } from "react-redux";
+import { Flex, Text } from '@chakra-ui/react';
 
-const COLORS = ["#53706a","#c8bba8","#cd1a4d","#478ec5","#7dc084","#147313","#7169b0","#d5e19d","#1dabf1","#313b48","#3dcd76","#6f1c3a","#887a0d","#271fd0","#3f7d9c"];
+const COLORS = ["#61efcd","#cdde1f","#fec200","#ca765a","#2485fa","#f57d7d","#c152d2","#8854d9","#3d4eb8","#00bcd7","#e53e3e","#6f1c3a","#21ae3b","#271fd0","#3f7d9c"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -22,6 +23,7 @@ export const PieChartGraph = () => {
   const dispatch = useDispatch()
   const token = useSelector(state => state.auth.token)
   const data = useSelector(state => state.expenses.categoryBalance)
+  const {success} = useSelector((state) => state.expenses)
 
   class Example extends PureComponent {
     static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
@@ -35,7 +37,7 @@ export const PieChartGraph = () => {
               cy="50%"
               labelLine={true}
               label={renderCustomizedLabel}
-              outerRadius={110}
+              outerRadius={90}
               fill="#8884d8"
               legendType='circle'
               dataKey="_sum.amount"
@@ -44,7 +46,7 @@ export const PieChartGraph = () => {
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Legend iconSize={10}  />
+            <Legend iconSize={10} />
           </PieChart>
         </ResponsiveContainer>
       );
@@ -55,10 +57,13 @@ export const PieChartGraph = () => {
     if(token)
     dispatch(getCategoryBalance(token))
 
-  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [token, success]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Example />
+    <Flex w={'100%'} h={'100%'} flexDirection={'column'} p={4} gap={2}>
+      <Text>Total Expenses</Text>
+      <Example />
+    </Flex>
   )
 }
 

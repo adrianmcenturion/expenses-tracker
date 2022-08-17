@@ -35,8 +35,8 @@ const Layout = () => {
       <GridItem bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"dash"} display='grid' alignContent="center">
         <Dashboard />
       </GridItem>
-      <GridItem area={"balance"} display='grid' alignContent="center" bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
-        <Flex gap={4} justifyContent='space-evenly'>
+      <GridItem area={"balance"} display='grid' alignContent="center" bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} p={4}>
+        <Flex gap={4} justifyContent='space-evenly' fontSize={{base:'xs', md: 'md'}}>
           <Box textAlign={'center'}>
             Income
             <Text color={'green.500'}>${income}</Text>

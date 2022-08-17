@@ -10,7 +10,7 @@ const Dashboard = () => {
     <Flex justifyContent={'space-between'} align="center" p={4}>
         <Text fontSize={'lg'}>Dashboard</Text>
         <Spacer />
-        <Button onClick={onOpen}>Add Transactions</Button>
+        <Button onClick={onOpen} size={{base: 'sm', md: 'md'}} >Add Transactions</Button>
         <AddTransactionModal onClose={onClose} isOpen={isOpen} />
     </Flex>
   )

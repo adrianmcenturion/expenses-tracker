@@ -31,19 +31,20 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
             token: token
         }
 
-        console.log(data)
-        if(token)
-        dispatch(addExpense(data))
-        if(success) onClose()
+        if(token && data){
+          dispatch(addExpense(data))
+          success && onClose()
+        }
+        return
     }
 
     useEffect(() => {
         if(token)
         dispatch(getCategories(token))  
-    }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [token, onClose]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <Modal isCentered isOpen={isOpen} onClose={onClose} >
+        <Modal isCentered isOpen={isOpen} onClose={onClose} size={{base:'xs', md: 'md'}}>
         <ModalOverlay
           bg='blackAlpha.300'
           backdropFilter='blur(10px)'
@@ -63,14 +64,14 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
                 </FormControl>
                 <HStack spacing='24px'>
                 <FormControl isRequired>
-                    <FormLabel>Category</FormLabel>
-                    <Select placeholder='Select a category' name='category' textTransform={'Capitalize'}>
+                    <FormLabel fontSize={{base:'xs', md: 'md'}}>Category</FormLabel>
+                    <Select fontSize={{base:'xs', md: 'md'}} placeholder='Select a category' name='category' textTransform={'Capitalize'} size='sm'>
                         {type === 'type-expense' ? expenses.map((expense, key) => <option key={key} value={expense.id}>{expense.name}</option>) : incomes.map((incomes, key) => <option key={key} value={incomes.id}>{incomes.name}</option>)}
                     </Select>
                     </FormControl>
                     <FormControl isRequired>
-                    <FormLabel>Enter an amount</FormLabel>
-                    <NumberInput min={0.1} placeholder='0' name='amount'>
+                    <FormLabel fontSize={{base:'xs', md: 'md'}}>Enter amount</FormLabel>
+                    <NumberInput min={0.1} placeholder='0' name='amount' size={'sm'}>
                         <NumberInputField />
                         <NumberInputStepper>
                         <NumberIncrementStepper />
@@ -80,10 +81,11 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
                     </FormControl>
                 </HStack>
                 <FormControl isRequired>
-                    <FormLabel>Name</FormLabel>
-                    <Input name='name' placeholder='Name' />
+                    <FormLabel fontSize={{base:'xs', md: 'md'}}>Description</FormLabel>
+                    <Input name='name' placeholder='Description' />
                 </FormControl>
-                <FormControl >
+                <FormControl isRequired>
+                <FormLabel fontSize={{base:'xs', md: 'md'}}>Date</FormLabel>
                 <Input
                       name='date'
                       placeholder="Select Date and Time"
