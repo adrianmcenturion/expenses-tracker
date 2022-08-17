@@ -7,6 +7,7 @@ export const ExpensesEmptyState = {
     expense: 0,
     transactions: 0,
     movements: [],
+    categoryBalance: [],
     loading: false,
     success: false,
   };
@@ -82,6 +83,23 @@ export const ExpensesEmptyState = {
     return res
   })
 
+  export const getCategoryBalance = createAsyncThunk(
+    //action type string
+    'expenses/balance/category',
+    // callback function
+    async (token, thunkAPI) => {
+      const res = await AxiosInstance.get('/expenses/balance/category', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }  
+    }).then(
+      (response) => {
+        return response.data}
+    )
+    .catch((error) => error)
+    return res
+  })
+
 
 
 
@@ -143,6 +161,16 @@ export const ExpensesEmptyState = {
         state.loading = false
         state.success = false
       },
+      [getCategoryBalance.pending]: (state) => {
+        state.loading = true
+      },
+      [getCategoryBalance.fulfilled]: (state, action ) => {
+        state.categoryBalance = action.payload
+        state.loading = false
+      },
+      [getCategoryBalance.rejected]: (state) => {
+        state.loading = false
+      }
     }
   });
 

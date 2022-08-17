@@ -185,9 +185,20 @@ const getTotalAmountByCategory = async (email) => {
                 amount: true,
             },
         })
-        
-        return expensesCategories
 
+        const categories = await showAll()
+        
+        const res = await Promise.all([expensesCategories, categories])
+
+        const result = res[0].map( item => {
+            const obj = res[1].expenses.find( o => o.id === item.categoryId);
+            return { ...item, ...obj };
+        });
+        
+        const filteredResult = result.filter( x => x.name);
+
+        return filteredResult
+        
     } catch (err) {
         console.log(err)
         throw new Error(err)

@@ -4,7 +4,7 @@ import Dashboard from "./dashboard";
 import Transactions from "./transactions";
 import { useEffect } from "react";
 import { getBalance } from "../../../redux/states/expenses";
-import Example from "./chart";
+import Example, { PieChartGraph } from "./chart";
 
 const Layout = () => {
   const dispatch = useDispatch()
@@ -56,7 +56,7 @@ const Layout = () => {
         </Flex>
       </GridItem>
       <GridItem  bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"total-expenses-graph"} maxH='600px'>
-        <Example />
+        <PieChartGraph />
         {/* total-expenses-graph */}
       </GridItem>
       {/* <GridItem  bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"account-balance"}>
