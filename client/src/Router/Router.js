@@ -19,6 +19,7 @@ const Router = () => {
         {!token && <Route path="/login" element={<Login />} />}
         {token ? <Route path="/admin" element={<Admin />} /> : null}
         {token ? <Route path="/transactions" element={<Transactions />} /> : null}
+        <Route path="/" element={<Login />} />
         <Route path="*" element={<Login />} />
       </Routes>
     </BrowserRouter>
