@@ -1,21 +1,26 @@
-import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button, Heading, useColorModeValue, useToast} from '@chakra-ui/react';
+import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button, Heading, useColorModeValue, useToast, InputGroup, InputRightElement} from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { Login } from '../../../redux/states/auth';
 import { toasts } from '../../../components/toasts';
+import { useState } from 'react';
 
   const LoginComponent = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
     const {loading} = useSelector((state) => state.auth)
     const toast = useToast()
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       const data = {email: e.target.email.value, password: e.target.password.value}
       dispatch(Login(data))
+
       toast(toasts)
       
-      !loading && navigate('/home')
+      // !loading && navigate('/home')
       
     }
 
@@ -39,9 +44,20 @@ import { toasts } from '../../../components/toasts';
                 <FormLabel>Email address</FormLabel>
                 <Input borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} type="email" name='email'/>
               </FormControl>
-              <FormControl id="password">
+              <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} type="password" />
+                <InputGroup>
+                  <Input borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} type={showPassword ? 'text' : 'password'} name='password'/>
+                  <InputRightElement h={'full'}>
+                    <Button
+                      variant={'ghost'}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }>
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
               </FormControl>
               <Stack spacing={10}>
                 <Stack

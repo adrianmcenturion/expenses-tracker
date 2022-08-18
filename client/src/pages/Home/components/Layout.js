@@ -1,10 +1,10 @@
 import { Flex, Grid, GridItem, Box, Text, useColorModeValue } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import Dashboard from "./dashboard";
-import Transactions from "./transactions";
 import { useEffect } from "react";
 import { getBalance } from "../../../redux/states/expenses";
 import { PieChartGraph } from "./chart";
+import RecentTransactions from "./recentTransactions";
 
 const Layout = () => {
   const dispatch = useDispatch()
@@ -59,7 +59,7 @@ const Layout = () => {
         <PieChartGraph />
       </GridItem>
       <GridItem area={"recent-transactions"} display='grid' w='100%'  bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
-        <Transactions />
+        <RecentTransactions />
       </GridItem>
     </Grid>
   );
