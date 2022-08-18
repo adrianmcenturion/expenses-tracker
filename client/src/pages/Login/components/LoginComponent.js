@@ -20,7 +20,7 @@ import { useState } from 'react';
 
       toast(toasts)
       
-      // !loading && navigate('/home')
+      !loading && navigate('/home')
       
     }
 
