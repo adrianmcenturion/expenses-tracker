@@ -1,8 +1,8 @@
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, FormLabel, Flex, FormControl, RadioGroup, HStack, Radio, Select, Input, NumberInput, NumberInputField,
  NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from '@chakra-ui/react'
 import { useDispatch, useSelector } from "react-redux";
-import { addExpense } from '../../../redux/states/expenses';
-import { getCategories } from '../../../redux/states/categories';
+import { addExpense } from '../../../../redux/states/expenses';
+import { getCategories } from '../../../../redux/states/categories';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 

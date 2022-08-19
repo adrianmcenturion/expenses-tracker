@@ -1,9 +1,9 @@
 import { Flex, Container, Text, Spinner, AbsoluteCenter, } from "@chakra-ui/react"
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../../components/Navbar/Navbar'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getMovements } from "../../redux/states/expenses";
-import GridTransactions from "../../components/transactionsGrid";
+import { getMovements } from "../../../redux/states/expenses";
+import GridTransactions from "../../../components/transactionsGrid";
 
 const Transactions = () => {
 

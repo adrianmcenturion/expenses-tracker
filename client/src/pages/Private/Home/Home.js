@@ -1,7 +1,7 @@
 
 import { Container, Flex } from "@chakra-ui/react"
-import Layout from "./components/Layout"
-import Navbar from '../../components/Navbar/Navbar'
+import Layout from "../Home/components/Layout"
+import Navbar from '../../../components/Navbar/Navbar'
 
 const Home = () => {
   return (

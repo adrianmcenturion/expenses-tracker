@@ -2,7 +2,7 @@ import { Flex, Grid, GridItem, Box, Text, useColorModeValue } from "@chakra-ui/r
 import { useDispatch, useSelector } from "react-redux";
 import Dashboard from "./dashboard";
 import { useEffect } from "react";
-import { getBalance } from "../../../redux/states/expenses";
+import { getBalance } from "../../../../redux/states/expenses";
 import { PieChartGraph } from "./chart";
 import RecentTransactions from "./recentTransactions";
 

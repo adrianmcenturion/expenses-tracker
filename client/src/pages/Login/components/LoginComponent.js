@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Login } from '../../../redux/states/auth';
 import { toasts } from '../../../components/toasts';
 import { useState } from 'react';
+import { PrivateRoutes } from '../../../models/routes';
 
   const LoginComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +21,7 @@ import { useState } from 'react';
 
       toast(toasts)
       
-      !loading && navigate('/home')
+      !loading && navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true})
       
     }
 

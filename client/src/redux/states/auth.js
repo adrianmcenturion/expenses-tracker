@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from '../../services/axiosInstances';
+// import { clearLocalStorage, persistLocalStorage } from '../../utils/LocalStorageFunctions';
 
 export const AuthEmptyState = {
     token: null,
@@ -14,7 +15,10 @@ export const AuthEmptyState = {
     // callback function
     async ({email, password},thunkAPI) => {
       const res = await AxiosInstance.post('/auth/login', { email, password }).then(
-      (response) => response.data.accessToken
+      (response) => {
+        // persistLocalStorage('token', response.data)
+        return response.data.accessToken
+      }
     )
     .catch((error) => error)
     return res
@@ -34,11 +38,16 @@ export const AuthEmptyState = {
     return res
   })
 
+
   export const AuthSlice = createSlice({
     name: 'auth',
     initialState: AuthEmptyState,
+    // initialState: localStorage.getItem('token') ? localStorage.getItem('token') : AuthEmptyState,
     reducers: {
-      logout: (state) => { state = AuthEmptyState}
+      logout: () => {
+          // clearLocalStorage('token')
+          return AuthEmptyState
+        }
     },
     extraReducers: {
       [Login.pending]: (state) => {

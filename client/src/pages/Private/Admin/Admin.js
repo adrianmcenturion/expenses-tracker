@@ -1,6 +1,6 @@
 
 import { Container } from '@chakra-ui/react'
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../../components/Navbar/Navbar'
 import AdminComponent from './components/AdminComponent'
 
 const Admin = () => {

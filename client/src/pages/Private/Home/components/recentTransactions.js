@@ -1,9 +1,9 @@
 import { Flex, Spacer, Text, Link, Center, Spinner} from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getLastMovements } from "../../../redux/states/expenses";
+import { getLastMovements } from "../../../../redux/states/expenses";
 import { Link as RouteLink } from "react-router-dom";
-import GridTransactions from "../../../components/transactionsGrid";
+import GridTransactions from "../../../../components/transactionsGrid";
 
 
 const RecentTransactions = () => {
@@ -25,7 +25,7 @@ const RecentTransactions = () => {
             <Spacer />
             <Link
                 as={RouteLink}
-                to={'/transactions'}
+                to={'/private/transactions'}
                 fontWeight={'bold'}
                 px={2}
                 py={1}

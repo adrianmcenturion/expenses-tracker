@@ -1,6 +1,6 @@
 import React, { PureComponent, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
-import { getCategoryBalance } from '../../../redux/states/expenses';
+import { getCategoryBalance } from '../../../../redux/states/expenses';
 import { useDispatch, useSelector } from "react-redux";
 import { Flex, Text, Center, Spinner } from '@chakra-ui/react';
 
