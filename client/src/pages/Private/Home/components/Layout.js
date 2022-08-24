@@ -55,10 +55,10 @@ const Layout = () => {
           </Box>
         </Flex>
       </GridItem>
-      <GridItem  bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"total-expenses-graph"} maxH='600px'>
+      <GridItem  bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"total-expenses-graph"} minH={'400px'} maxH='800px'>
         <PieChartGraph />
       </GridItem>
-      <GridItem area={"recent-transactions"} display='grid' w='100%'  bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
+      <GridItem area={"recent-transactions"} display='grid' w='100%' bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
         <RecentTransactions />
       </GridItem>
     </Grid>

@@ -1,9 +1,9 @@
 export const toasts = () => {
     return {
-        title: 'Account created.',
-        description: "We've created your account for you.",
+        title: 'Logged successfully',
+        description: "Redirecting to the dashboard...",
         status: 'success',
-        duration: 9000,
+        duration: 3000,
         isClosable: true,
       }
 }

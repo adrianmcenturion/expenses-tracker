@@ -2,10 +2,12 @@ import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { Login } from '../../../redux/states/auth';
+import { login, Login } from '../../../redux/states/auth';
 import { toasts } from '../../../components/toasts';
 import { useState } from 'react';
 import { PrivateRoutes } from '../../../models/routes';
+import { AxiosInstance } from '../../../services/axiosInstances';
+import { persistLocalStorage } from '../../../utils/LocalStorageFunctions';
 
   const LoginComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -17,11 +19,22 @@ import { PrivateRoutes } from '../../../models/routes';
     const handleSubmit = async (e) => {
       e.preventDefault();
       const data = {email: e.target.email.value, password: e.target.password.value}
-      dispatch(Login(data))
+      // dispatch(Login(data))
+      const gettingLoggedIn = await AxiosInstance.post('/auth/login', data)
 
-      toast(toasts)
+      if(gettingLoggedIn.status === 200) {
+        const token = gettingLoggedIn.data.accessToken
+        dispatch(login(token))
+        persistLocalStorage('token', token)
+        toast(toasts())
+
+        setTimeout(() => {
+          navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true})
+          
+        }, 3000);
+      }
+
       
-      !loading && navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true})
       
     }
 

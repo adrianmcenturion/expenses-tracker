@@ -3,6 +3,7 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Logout from '../Logout/Logout'
   
   const Links = ['home', 'login', 'register', 'admin'];
   
@@ -52,6 +53,7 @@ import { useSelector } from "react-redux";
                   ))}
               </HStack>
               <Spacer />
+                  <Logout />
                   <Button onClick={toggleColorMode}>
                       {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                   </Button>
