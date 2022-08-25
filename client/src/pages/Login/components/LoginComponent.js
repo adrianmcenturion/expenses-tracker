@@ -2,42 +2,42 @@ import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { login, Login } from '../../../redux/states/auth';
-import { toasts } from '../../../components/toasts';
-import { useState } from 'react';
+import { Login } from '../../../redux/states/auth';
+import { LoggedErrortoasts, Loggedtoasts} from '../../../components/toasts';
+import { useEffect, useState } from 'react';
 import { PrivateRoutes } from '../../../models/routes';
-import { AxiosInstance } from '../../../services/axiosInstances';
-import { persistLocalStorage } from '../../../utils/LocalStorageFunctions';
 
   const LoginComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const {loading} = useSelector((state) => state.auth)
+    const {loading, success, error, token } = useSelector((state) => state.auth)
     const toast = useToast()
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       const data = {email: e.target.email.value, password: e.target.password.value}
-      // dispatch(Login(data))
-      const gettingLoggedIn = await AxiosInstance.post('/auth/login', data)
+      dispatch(Login(data))
 
-      if(gettingLoggedIn.status === 200) {
-        const token = gettingLoggedIn.data.accessToken
-        dispatch(login(token))
-        persistLocalStorage('token', token)
-        toast(toasts())
-
+      if (success) {
+        
+        toast(Loggedtoasts())
         setTimeout(() => {
-          navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true})
-          
-        }, 3000);
+          navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}) 
+        }, 2500);
       }
-
-      
-      
+      if (error) {
+        toast(LoggedErrortoasts())
+      }
     }
 
+    useEffect(() => {
+      if (token) {
+        navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}) 
+      }
+    }, [navigate, token])
+    
+    
     return (
       <Flex
         align={'center'}

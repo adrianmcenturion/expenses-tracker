@@ -4,30 +4,23 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Logout from '../Logout/Logout'
+import { AdminRoutes, PrivateRoutes, PublicRoutes } from '../../models/routes';
   
-  const Links = ['home', 'login', 'register', 'admin'];
-  
-  const NavLink = ({ children }) => (
-    <Link
-      as={RouteLink}
-      to={`/${children}`}
-      fontWeight={'bold'}
-      px={2}
-      py={1}
-      rounded={'md'}
-      _hover={{
-        textDecoration: 'none',
-      }}
-      textTransform={'capitalize'}
-      >
-        {children}
-    </Link>
-  );
-  
+
   export default function Simple() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
     const token = useSelector(state => state.auth.token)
+    const rol = useSelector(state => state.auth.userInfo.role)
+
+    const NavLink = () => (
+      <>
+      <Link as={RouteLink} to={`/${PrivateRoutes.HOME}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Dashboard</Link>
+      {rol === 'admin' && <Link as={RouteLink} to={`/${AdminRoutes.ADMIN}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Admin</Link>}
+      {token ? null : <Link as={RouteLink} to={`/${PublicRoutes.LOGIN}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Login</Link>}
+      {token ? null : <Link as={RouteLink} to={`/${PublicRoutes.REGISTER}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Register</Link>}
+      </>
+    );
   
     return (
       <>
@@ -43,17 +36,15 @@ import Logout from '../Logout/Logout'
               />
             <HStack
                   justify="center"
-                  gap={12}
+                  gap={6}
                   as={'nav'}
                   spacing={8}
                   display={{ base: 'none', md: 'flex' }}>
                   <Spacer />
-                  {Links.map((link) => (
-                    token && (link === 'register' || link === 'login') ? null : <NavLink key={link}>{link}</NavLink>
-                  ))}
+                  {<NavLink/>}
               </HStack>
               <Spacer />
-                  <Logout />
+                  {token && <Logout />}
                   <Button onClick={toggleColorMode}>
                       {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                   </Button>
@@ -63,10 +54,7 @@ import Logout from '../Logout/Logout'
           {isOpen ? (
             <Box pb={4} px={4} display={{ md: 'none' }}>
               <Stack as={'nav'} spacing={4} >
-                {Links.map((link) => (
-                  token && (link === 'register' || link === 'login') ? null : <NavLink key={link}>{link}</NavLink>
-                ))}
-                
+                {<NavLink/>}
               </Stack>
             </Box>
           ) : null}

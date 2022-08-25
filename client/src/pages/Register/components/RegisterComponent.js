@@ -5,7 +5,8 @@ import { Link as RouteLink, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { Register } from '../../../redux/states/auth';
-import { toasts } from '../../../components/toasts';
+import { RegisteredToast } from '../../../components/toasts';
+import { PublicRoutes } from '../../../models/routes';
   
  const RegisterComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -17,12 +18,11 @@ import { toasts } from '../../../components/toasts';
     const handleSubmit = async (e) => {
       e.preventDefault();
       const data = {name: e.target.name.value, email: e.target.email.value, password: e.target.password.value}
-      console.log(data)
       dispatch(Register(data))
-      toast(toasts)
+      toast(RegisteredToast())
       setTimeout(() => {
-        !loading && navigate('/login')
-      }, 1500);
+        !loading && navigate(`/${PublicRoutes.LOGIN}`, {replace: true})
+      }, 2500);
     }
   
     return (

@@ -209,7 +209,7 @@ const getTotalAmountByCategory = async (email) => {
 const deleteExpense = async (id, email) => {
     try {
         
-        const deleted = await prisma.expense.delete({
+        const deleted = await prisma.expense.deleteMany({
             where: {
                 id: id,
                 user: {

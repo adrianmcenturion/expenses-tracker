@@ -1,84 +1,112 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from '../../services/axiosInstances';
-import { clearLocalStorage } from '../../utils/LocalStorageFunctions';
-// import { clearLocalStorage, persistLocalStorage } from '../../utils/LocalStorageFunctions';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AxiosInstance } from "../../services/axiosInstances";
+import {
+  clearLocalStorage,
+  persistLocalStorage,
+} from "../../utils/LocalStorageFunctions";
+
+const token = localStorage.getItem('token')
+  ? localStorage.getItem('token')
+  : null
 
 export const AuthEmptyState = {
-    token: null,
-    userInfo: {},
-    loading: false,
-  }
+  token,
+  userInfo: {},
+  loading: false,
+  success: false,
+  error: null
+};
 
+export const Login = createAsyncThunk(
+  //action type string
+  'auth/login',
+  // callback function
+  async ({email, password},thunkAPI) => {
 
-  export const Login = createAsyncThunk(
-    //action type string
-    'auth/login',
-    // callback function
-    async ({email, password},thunkAPI) => {
-      const res = await AxiosInstance.post('/auth/login', { email, password }).then(
-      (response) => {
-        // persistLocalStorage('token', response.data)
-        return response.data.accessToken
-      }
-    )
-    .catch((error) => {
+    try {
 
-      return res
-    })
-  })
+      const response = await AxiosInstance.post('/auth/login', { email, password })
+      persistLocalStorage('token', response.data.accessToken)
+      thunkAPI.dispatch(userInfoAction(response.data.accessToken))
+      return response.data.accessToken
 
-
-  export const Register = createAsyncThunk(
-    //action type string
-    'auth/register',
-    // callback function
-    async ({name, email, password, role},thunkAPI) => {
-      const res = await AxiosInstance.post('/auth/register', { name, email, password, role }).then(
-      (response) => {
-        return 'registered'}
-    )
-    .catch((error) => error)
-    return res
-  })
-
-
-  export const AuthSlice = createSlice({
-    name: 'auth',
-    initialState: AuthEmptyState,
-    // initialState: localStorage.getItem('token') ? localStorage.getItem('token') : AuthEmptyState,
-    reducers: {
-      login: (state, action) => {
-        state.token = action.payload;                      
-      },
-      logout: () => {
-          clearLocalStorage('token')
-          return AuthEmptyState
-        }
-    },
-    extraReducers: {
-      [Login.pending]: (state) => {
-        state.loading = true
-      },
-      [Login.fulfilled]: (state, action ) => {
-        state.token = action.payload
-        state.loading = false
-      },
-      [Login.rejected]: (state) => {
-        state.loading = false
-      },
-
-      [Register.pending]: (state) => {
-        state.loading = true
-      },
-      [Register.fulfilled]: (state) => {
-        state.loading = false
-      },
-      [Register.rejected]: (state) => {
-        state.loading = false
-      },
+    } catch (error) {
+        return thunkAPI.rejectWithValue('Error when logging')
     }
-  });
+})
 
-  export const { logout, login } = AuthSlice.actions;
+export const Register = createAsyncThunk(
+  //action type string
+  "auth/register",
+  // callback function
+  async ({ name, email, password, role }, thunkAPI) => {
 
-  export default AuthSlice.reducer;
+
+    try {
+      const response = await AxiosInstance.post("/auth/register", {name, email, password, role})
+      return "registered";
+      
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  })
+
+export const AuthSlice = createSlice({
+  name: "auth",
+  initialState: AuthEmptyState,
+  reducers: {
+    logout: (state) => {
+      clearLocalStorage("token");
+      return AuthEmptyState;
+    },
+    userInfo: (state, action) => {
+      state.userInfo = action.payload;
+    },
+  },
+  extraReducers: {
+    [Login.pending]: (state) => {
+      state.loading = true
+      state.error = null
+    },
+    [Login.fulfilled]: (state, action ) => {
+      state.token = action.payload
+      state.loading = false
+      state.success = true
+    },
+    [Login.rejected]: (state, action) => {
+      state.loading = false
+      state.error = true
+    },
+
+    [Register.pending]: (state) => {
+      state.loading = true;
+    },
+    [Register.fulfilled]: (state) => {
+      state.loading = false;
+    },
+    [Register.rejected]: (state) => {
+      state.loading = false;
+    },
+  },
+});
+
+
+export const userInfoAction = (token) => async (dispatch) => {
+  try {
+    const response = await AxiosInstance.get("/auth/info", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log(response)
+    dispatch(userInfo(response.data))
+    return response.data
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const { logout, userInfo } = AuthSlice.actions;
+
+export default AuthSlice.reducer;

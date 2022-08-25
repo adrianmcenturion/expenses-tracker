@@ -4,7 +4,7 @@ import { PrivateRoutes } from "../models/routes"
 
 const RoleGuard = ({rol}) => {
 
-    const role = useSelector(state => state.auth.role)
+    const role = useSelector(state => state.auth.userInfo.role)
 
     return role === rol ? <Outlet /> : <Navigate replace to={PrivateRoutes.PRIVATE}/>
 
