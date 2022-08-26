@@ -35,7 +35,7 @@ const RecentTransactions = () => {
                     View all
             </Link>
         </Flex>
-        {loading ? <Center h={'100%'}><Spinner /></Center> : <GridTransactions data={movements}/>}
+        {loading ? <Center h={'100%'}><Spinner /></Center> : <GridTransactions data={movements} allTransactions={false}/>}
     </Flex>
     
   )

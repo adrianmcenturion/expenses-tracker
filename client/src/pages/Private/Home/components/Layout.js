@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { getBalance } from "../../../../redux/states/expenses";
 import { PieChartGraph } from "./chart";
 import RecentTransactions from "./recentTransactions";
+import { userInfoAction } from "../../../../redux/states/auth";
 
 const Layout = () => {
   const dispatch = useDispatch()
@@ -14,6 +15,7 @@ const Layout = () => {
   useEffect(() => {
     if(token)
     dispatch(getBalance(token))
+    dispatch(userInfoAction(token))
 
   }, [token, success]); // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -23,26 +23,26 @@ const GridTransactions = ({data, allTransactions}) => {
 
   return (
     <Flex flexDirection={'column'}>
-            <Grid templateColumns= '1fr 1fr 1.3fr 0.7fr 0.5fr' gridTemplateRows={'30px'} gridTemplateAreas='Date Category Description Amount Buttons' px={2} gap={2} borderBottom={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} >
-                <GridItem display='grid' w='100%' align="start"><Text fontSize={{base:'xs', md: 'md'}}>Date</Text></GridItem>
-                <GridItem display='grid' w='100%' align="start" ><Text fontSize={{base:'xs', md: 'md'}}>Category</Text></GridItem>
-                <GridItem display='grid' w='100%' align="start" ><Text fontSize={{base:'xs', md: 'md'}}>Description</Text></GridItem>
-                <GridItem display='grid' w='100%' align="end" ><Text fontSize={{base:'xs', md: 'md'}}>Amount</Text></GridItem>
-                <GridItem display='grid' w='100%' align="end" ><Text fontSize={{base:'xs', md: 'md'}}></Text></GridItem>
+            <Grid templateColumns={allTransactions ? '1fr 1.5fr 1.5fr 0.4fr 0.6fr' : '1fr 1.25fr 1.25fr 0.5fr'} gridTemplateRows={'30px'} px={2} gap={2} borderBottom={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} >
+                <GridItem display='grid' w='100%' align="start"><Text fontSize={{base:'x-small', md: 'md'}}>Date</Text></GridItem>
+                <GridItem display='grid' w='100%' align="start" ><Text fontSize={{base:'x-small', md: 'md'}}>Category</Text></GridItem>
+                <GridItem display='grid' w='100%' align="start" ><Text fontSize={{base:'x-small', md: 'md'}}>Description</Text></GridItem>
+                <GridItem display='grid' w='100%' align="end" ><Text fontSize={{base:'x-small', md: 'md'}}>Amount</Text></GridItem>
+                {!allTransactions ? <GridItem display='grid' w='100%' align="end" ><Text fontSize={{base:'x-small', md: 'md'}}></Text></GridItem> : null}
             </Grid>
             {data && data.map((e, key) => {
                 return(
-                    <Grid as={'form'} onSubmit={handleEdit} id='transaction-form' key={key} templateColumns= '1fr 1fr 1.3fr 0.7fr 0.5fr' gridTemplateRows={'30px'} gridTemplateAreas='Date Category Description Amount Buttons' px={2} gap={2} mt={2} borderBottom={'1px solid'} borderColor={'rgba(0,0,0,0.1)'} fontWeight='semibold' textTransform='capitalize'>
-                        <GridItem display='grid' w='100%' align="start"><Text id='date' fontSize={{base:'xs', md: 'md'}}>{moment(e.date).format('MM/DD/YYYY')}</Text></GridItem>
-                        <GridItem display='grid' w='100%' align="start" ><Text id='category' fontSize={{base:'xs', md: 'md'}} >{e.category.name}</Text></GridItem>
-                        <GridItem display='grid' w='100%' align="start" ><Text id='description' fontSize={{base:'xs', md: 'md'}}>{e.name}</Text></GridItem>
-                        <GridItem display='grid' w='100%' align="end" ><Text id='amount' color={e.type === 'expenseType' ? 'red.400' : 'green.500'} fontWeight={'bold'} fontSize={{base:'xs', md: 'md'}}>${e.amount}</Text></GridItem>
-                        <GridItem display='grid' w='100%' justifyContent={'end'} alignItems='start' id={e.id}>
-                            <Flex >
-                                <IconButton type="submit" size={{base: 'xs', md: 'sm'}} bg={'blue.700'} icon={<EditIcon/>}></IconButton>
-                                <IconButton onClick={handleDelete} size={{base: 'xs', md: 'sm'}} bg={'red.700'} icon={<CloseIcon/>}></IconButton>
+                    <Grid as={'form'} onSubmit={handleEdit} id='transaction-form' key={key} templateColumns={allTransactions ? '1fr 1.5fr 1.5fr 0.4fr 0.6fr' : '1fr 1.25fr 1.25fr 0.5fr'} gridTemplateRows={'30px'} px={2} gap={2} mt={2} borderBottom={'1px solid'} borderColor={'rgba(0,0,0,0.1)'} fontWeight='semibold' textTransform='capitalize'>
+                        <GridItem display='grid' w='100%' align="start"><Text id='date' fontSize={{base:'x-small', md: 'md'}}>{moment(e.date).format('MM/DD/YYYY')}</Text></GridItem>
+                        <GridItem display='grid' w='100%' align="start" ><Text maxW={{base: '40px', md: '200px'}} wordBreak={"break-all"} id='category' fontSize={{base:'x-small', md: 'md'}} >{e.category.name}</Text></GridItem>
+                        <GridItem display='grid' w='100%' align="start" ><Text id='description' fontSize={{base:'x-small', md: 'md'}}>{e.name}</Text></GridItem>
+                        <GridItem display='grid' w='100%' align="end" ><Text id='amount' color={e.type === 'expenseType' ? 'red.400' : 'green.500'} fontWeight={'bold'} fontSize={{base:'x-small', md: 'md'}}>${e.amount}</Text></GridItem>
+                        {allTransactions ? <GridItem display='grid' w='100%' justifyContent={'end'} alignItems='start' id={e.id}>
+                            <Flex gap={1}>
+                                <IconButton fontSize={{base:'x-small', md: 'md'}} type="submit" size={{base: '10rem', md: 'sm'}} p={1} borderRadius={{base: "sm", md: 'md'}} bg={'blue.700'} _hover={{bg:'blue.500'}} icon={<EditIcon/>}></IconButton>
+                                <IconButton fontSize={{base:'x-small', md: 'md'}} onClick={handleDelete} size={{base: '10rem', md: 'sm'}} p={1} borderRadius={{base: "sm", md: 'md'}} bg={'red.700'} _hover={{bg:'red.500'}} icon={<CloseIcon/>}></IconButton>
                             </Flex>
-                        </GridItem>
+                        </GridItem> : null}
                     </Grid>
                 )
             })}

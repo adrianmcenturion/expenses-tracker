@@ -25,7 +25,7 @@ const Transactions = () => {
                     <Flex align={'center'}>
                         <Text fontSize={'lg'} >Transactions</Text>
                     </Flex>
-                    {loading ? <AbsoluteCenter><Spinner /></AbsoluteCenter> : <GridTransactions data={movements}/>}
+                    {loading ? <AbsoluteCenter><Spinner /></AbsoluteCenter> : <GridTransactions data={movements} allTransactions={true}/>}
                 </Flex>
             </Flex>
         </Container>
