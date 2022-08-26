@@ -34,11 +34,11 @@ router.get('/balance', userLoggedIn, expensesController.getBalance)
 
 router.get('/balance/category', userLoggedIn, expensesController.getTotalAmountByCategory )
 
-//delete a expense
+//delete expense
 
-router.delete('/delete', userLoggedIn, expensesController.deleteExpense)
+router.delete('/delete/:id', userLoggedIn, expensesController.deleteExpense)
 
-//update a expense
+//update expense
 
 router.put('/update', userLoggedIn, expensesController.updateExpense)
 

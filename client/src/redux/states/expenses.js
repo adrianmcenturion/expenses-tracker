@@ -100,6 +100,26 @@ export const ExpensesEmptyState = {
     return res
   })
 
+  export const deleteExpenses = createAsyncThunk(
+    //action type string
+  'expense/delete',
+  // callback function
+  async ({id, token},thunkAPI) => {
+
+    try {
+
+      const res = await AxiosInstance.delete(`/expenses/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }  
+    })
+      
+      return console.log('deleted')
+
+    } catch (error) {
+        return thunkAPI.rejectWithValue('Error when logging')
+    }
+})
 
 
 
@@ -113,7 +133,7 @@ export const ExpensesEmptyState = {
     reducers: {
       createExpenses: (state, action) => action.payload,
       modifyExpenses: (state, action) => ({ ...state, ...action.payload}),
-      resetExpenses: () => ExpensesEmptyState
+      // deleteExpenses: (state, action) => action.payload
     },
     extraReducers: {
       [getBalance.pending]: (state) => {
@@ -170,10 +190,19 @@ export const ExpensesEmptyState = {
       },
       [getCategoryBalance.rejected]: (state) => {
         state.loading = false
+      },
+      [deleteExpenses.pending]: (state) => {
+        state.loading = true
+      },
+      [deleteExpenses.fulfilled]: (state ) => {
+        state.loading = false
+      },
+      [deleteExpenses.rejected]: (state) => {
+        state.loading = false
       }
     }
   });
 
-  export const { createExpenses, modifyExpenses, resetExpenses } = ExpensesSlice.actions;
+  export const { createExpenses, modifyExpenses, } = ExpensesSlice.actions;
 
   export default ExpensesSlice.reducer;

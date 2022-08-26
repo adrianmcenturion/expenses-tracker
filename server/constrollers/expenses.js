@@ -112,7 +112,7 @@ const getTotalAmountByCategory = async (req, res, next) => {
 
 const deleteExpense = async (req, res, next) => {
     
-    const id = req.body.id
+    const id = Number(req.params.id)
     const user = req.user
 
     try {

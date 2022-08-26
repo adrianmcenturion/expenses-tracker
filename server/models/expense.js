@@ -206,15 +206,13 @@ const getTotalAmountByCategory = async (email) => {
 
 }
 
-const deleteExpense = async (id, email) => {
+const deleteExpense = async (id) => {
     try {
         
-        const deleted = await prisma.expense.deleteMany({
+        const deleted = await prisma.expense.delete({
             where: {
                 id: id,
-                user: {
-                    email: email
-                }
+                
             }
         })
         

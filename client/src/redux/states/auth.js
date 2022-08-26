@@ -67,15 +67,18 @@ export const AuthSlice = createSlice({
     [Login.pending]: (state) => {
       state.loading = true
       state.error = null
+      state.success = false
     },
     [Login.fulfilled]: (state, action ) => {
       state.token = action.payload
       state.loading = false
       state.success = true
+      state.error = false
     },
     [Login.rejected]: (state, action) => {
       state.loading = false
       state.error = true
+      state.success = false
     },
 
     [Register.pending]: (state) => {
@@ -99,7 +102,6 @@ export const userInfoAction = (token) => async (dispatch) => {
       },
     });
 
-    console.log(response)
     dispatch(userInfo(response.data))
     return response.data
   } catch (error) {

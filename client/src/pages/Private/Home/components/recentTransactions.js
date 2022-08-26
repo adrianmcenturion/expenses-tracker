@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getLastMovements } from "../../../../redux/states/expenses";
 import { Link as RouteLink } from "react-router-dom";
-import GridTransactions from "../../../../components/transactionsGrid";
+import TransactionsTable from "../../../../components/transactionsTable";
 
 
 const RecentTransactions = () => {
@@ -35,7 +35,7 @@ const RecentTransactions = () => {
                     View all
             </Link>
         </Flex>
-        {loading ? <Center h={'100%'}><Spinner /></Center> : <GridTransactions data={movements} allTransactions={false}/>}
+        {loading ? <Center h={'100%'}><Spinner /></Center> : <TransactionsTable data={movements} allTransactions={false}/>}
     </Flex>
     
   )

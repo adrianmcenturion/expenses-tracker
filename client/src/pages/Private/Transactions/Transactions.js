@@ -2,8 +2,8 @@ import { Flex, Container, Text, Spinner, AbsoluteCenter, } from "@chakra-ui/reac
 import Navbar from '../../../components/Navbar/Navbar'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getMovements } from "../../../redux/states/expenses";
-import GridTransactions from "../../../components/transactionsGrid";
+import { getMovements, getLastMovements } from "../../../redux/states/expenses";
+import TransactionsTable from "../../../components/transactionsTable";
 
 const Transactions = () => {
 
@@ -25,7 +25,8 @@ const Transactions = () => {
                     <Flex align={'center'}>
                         <Text fontSize={'lg'} >Transactions</Text>
                     </Flex>
-                    {loading ? <AbsoluteCenter><Spinner /></AbsoluteCenter> : <GridTransactions data={movements} allTransactions={true}/>}
+                    {/* {loading ? <AbsoluteCenter><Spinner /></AbsoluteCenter> : <GridTransactions data={movements} allTransactions={true}/>} */}
+                    {loading ? <AbsoluteCenter><Spinner /></AbsoluteCenter> : <TransactionsTable data={movements} allTransactions={true}/>}
                 </Flex>
             </Flex>
         </Container>
