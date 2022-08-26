@@ -228,5 +228,35 @@ const deleteExpense = async (id, email) => {
 
 }
 
+const updateExpense = async (id, email, name, date, amount, categoryId, type) => {
+    try {
+        
+        const updated = await prisma.expense.updateMany({
+            where: {
+                id: id,
+                user: {
+                    email: email
+                }
+            },
+            data: {
+                name: name,
+                date: date,
+                amount: amount,
+                type: (type === 'expense') ? ExpensesType.expenseType : ExpensesType.incomeType,
+                categoryId: categoryId
+                },
+            
+        })
+        
+        return updated
+        
+        
+    } catch (err) {
+        console.log(err)
+        throw new Error(err)
+    }
 
-module.exports = { create, findByName, showAllMovements, getByCategory, getBalance, getTotalAmountByCategory, showLastMovements, deleteExpense }
+}
+
+
+module.exports = { create, findByName, showAllMovements, getByCategory, getBalance, getTotalAmountByCategory, showLastMovements, deleteExpense, updateExpense }

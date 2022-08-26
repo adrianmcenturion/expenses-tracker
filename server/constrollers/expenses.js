@@ -127,6 +127,28 @@ const deleteExpense = async (req, res, next) => {
     }
 }
 
+const updateExpense = async (req, res, next) => {
+    
+    const id = req.body.id
+    const user = req.user
+    const name = req.body.name;
+    const date = new Date(req.body.date)
+    const amount = req.body.amount;
+    const categoryId = req.body.category;
+    const type = req.body.type
+
+    try {
+        const expenseUpdated = await expense.updateExpense(id, user.email, name, date, amount, categoryId, type)
+        res.statusCode = 200
+        res.send(expenseUpdated)
+        
+    } catch (err) {
+        console.log(err)
+        res.statusCode = 500
+        res.send(err.message)
+    }
+}
+
 
 const nameIsValid = (name) => {
     return name !== ''
@@ -135,4 +157,4 @@ const nameIsValid = (name) => {
 
 
 
-module.exports = { createExpense, findExpenseByName, showLastMovements, showAllMovements, getByCategory, getBalance, getTotalAmountByCategory, deleteExpense}
+module.exports = { createExpense, findExpenseByName, showLastMovements, showAllMovements, getByCategory, getBalance, getTotalAmountByCategory, deleteExpense, updateExpense}

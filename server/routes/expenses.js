@@ -38,6 +38,10 @@ router.get('/balance/category', userLoggedIn, expensesController.getTotalAmountB
 
 router.delete('/delete', userLoggedIn, expensesController.deleteExpense)
 
+//update a expense
+
+router.put('/update', userLoggedIn, expensesController.updateExpense)
+
 
 
 module.exports = router

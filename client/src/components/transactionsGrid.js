@@ -11,12 +11,13 @@ const GridTransactions = ({data, allTransactions}) => {
 
     const handleEdit = (e) => {
         e.preventDefault()
-        console.log(e.target.children[0].children[0].id)
-        console.log(e.target.children[1].children[0].id)
-        console.log(e.target.children[2].children[0].id)
-        console.log(e.target.children[3].children[0].id)
+        console.log(e.target.children[0].children[0].innerHTML)
+        console.log(e.target.children[1].children[0].innerHTML)
+        console.log(e.target.children[2].children[0].innerHTML)
+        console.log(e.target.children[3].children[0].innerHTML.slice(1))
         console.log(e.target.children[4].id)
         //children[4].children[0].children[1].id
+        //children[3].children[0].innerHTML
     }
 
 
