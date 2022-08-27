@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import TransactionsModal from "../pages/Private/Transactions/components/transactionsModal";
 import Alert from "../pages/Private/Transactions/components/alert";
 import { useDispatch, useSelector } from "react-redux";
-import { getMovements } from "../redux/states/expenses";
+
 
 const TransactionsTable = ({ data, allTransactions }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -19,7 +19,6 @@ const TransactionsTable = ({ data, allTransactions }) => {
 
   const handleDelete = (e) => {
     setIdToDelete(e.currentTarget.parentNode.parentNode.id);
-    //parentNode.parentNode.parentNode.id
     onOpenDelete()
   };
 
@@ -39,12 +38,6 @@ const TransactionsTable = ({ data, allTransactions }) => {
     console.log(e.target.children[3].children[0].innerHTML.slice(1));
     console.log(e.target.children[4].id);
   };
-
-  // useEffect(() => {
-  //   if(token)
-  //   dispatch(getMovements(token))
-
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

@@ -7,7 +7,6 @@ const Dashboard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const {name} = useSelector(state => state.auth.userInfo)
 
-
   return (
     <Flex justifyContent={'space-between'} align="center" p={4}>
         <Text fontSize={'lg'}>{name}'s Dashboard</Text>

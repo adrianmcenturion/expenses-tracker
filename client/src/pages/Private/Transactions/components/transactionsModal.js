@@ -45,10 +45,10 @@ const TransactionsModal = ({isOpen, onClose, expenseData}) => {
         return
     }
 
-    useEffect(() => {
-        if(token)
-        dispatch(getCategories(token))  
-    }, [token, onClose]); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //     if(token)
+    //     dispatch(getCategories(token))  
+    // }, [token, onClose]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
 

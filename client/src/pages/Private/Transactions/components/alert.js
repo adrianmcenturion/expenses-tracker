@@ -1,7 +1,6 @@
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button } from "@chakra-ui/react"
 import { useDispatch, useSelector } from "react-redux"
 import { deleteExpenses } from "../../../../redux/states/expenses"
-import { AxiosInstance } from "../../../../services/axiosInstances"
 
 const Alert = ({isOpen, onClose, cancelRef, id}) => {
 
@@ -12,25 +11,11 @@ const Alert = ({isOpen, onClose, cancelRef, id}) => {
         let expenseId = Number(id)
         const data = {id: expenseId, token: token}
         dispatch(deleteExpenses(data))
-        console.log(typeof(expenseId))
 
-    // const deleteEx = await AxiosInstance.delete('/expenses/delete', id ,{
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         })
-                
-    //         if(deleteEx.status === 200) {
-                console.log('deleted')
-                    
-                setTimeout(() => {
-                    console.log('alert con id: ' + id)
-                    onClose()
-                }, 1000);
-            // }
-        }
-
-
+        setTimeout(() => {
+            onClose()
+        }, 1000);
+    }
 
   return (
     <AlertDialog

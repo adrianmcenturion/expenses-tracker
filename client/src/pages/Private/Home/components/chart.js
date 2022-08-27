@@ -25,7 +25,7 @@ export const PieChartGraph = () => {
   const data = useSelector(state => state.expenses.categoryBalance)
   const {success, loading} = useSelector((state) => state.expenses)
 
-  class Example extends PureComponent {
+  class Chart extends PureComponent {
     static demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
     render() {    
       return (
@@ -62,7 +62,7 @@ export const PieChartGraph = () => {
   return (
     <Flex w={'100%'} h={'100%'} flexDirection={'column'} p={4} gap={2}>
       <Text>Total Expenses</Text>
-      {loading ? <Center h={'100%'}><Spinner /></Center> : <Example />}
+      {loading ? <Center h={'100%'}><Spinner /></Center> : data.length !== 0 ? <Chart /> : <Center h={'100%'}><Text>No expenses</Text></Center>}
     </Flex>
   )
 }

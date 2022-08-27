@@ -114,7 +114,7 @@ export const ExpensesEmptyState = {
         }  
     })
       
-      return console.log('deleted')
+      return 
 
     } catch (error) {
         return thunkAPI.rejectWithValue('Error when logging')
@@ -193,12 +193,15 @@ export const ExpensesEmptyState = {
       },
       [deleteExpenses.pending]: (state) => {
         state.loading = true
+        state.success = false
       },
       [deleteExpenses.fulfilled]: (state ) => {
         state.loading = false
+        state.success = true
       },
       [deleteExpenses.rejected]: (state) => {
         state.loading = false
+        state.success = false
       }
     }
   });

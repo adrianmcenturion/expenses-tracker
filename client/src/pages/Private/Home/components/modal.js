@@ -33,7 +33,12 @@ export const AddTransactionModal = ({isOpen, onClose}) => {
 
         if(token && data){
           dispatch(addExpense(data))
-          success && onClose()
+          if (success) {
+            setTimeout(() => {
+              onClose()
+          }, 600);
+          }
+          
         }
         return
     }
