@@ -114,7 +114,7 @@ export const ExpensesEmptyState = {
         }  
     })
       
-      return 
+    return
 
     } catch (error) {
         return thunkAPI.rejectWithValue('Error when logging')
@@ -122,7 +122,22 @@ export const ExpensesEmptyState = {
 })
 
 
-
+export const updateExpense = createAsyncThunk(
+  //action type string
+  'expenses/update',
+  // callback function
+  async ({id, name, date, amount, category, type, token}, thunkAPI) => {
+    const res = await AxiosInstance.put('/expenses/update', { id, name, date, amount, category, type }, {
+      headers: {
+          Authorization: `Bearer ${token}`
+      }  
+  }).then(
+    (response) => {
+      return response.statusText}
+  )
+  .catch((error) => error)
+  return res
+})
 
 
 
@@ -202,7 +217,19 @@ export const ExpensesEmptyState = {
       [deleteExpenses.rejected]: (state) => {
         state.loading = false
         state.success = false
-      }
+      },
+      [updateExpense.pending]: (state) => {
+        state.loading = true
+        state.success = false
+      },
+      [updateExpense.fulfilled]: (state, action ) => {
+        state.loading = false
+        state.success = true
+      },
+      [updateExpense.rejected]: (state) => {
+        state.loading = false
+        state.success = false
+      },
     }
   });
 

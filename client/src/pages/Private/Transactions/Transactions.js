@@ -1,4 +1,4 @@
-import { Flex, Container, Text, Spinner, AbsoluteCenter, Center, } from "@chakra-ui/react"
+import { Flex, Container, Text, Spinner, AbsoluteCenter, Center, useColorModeValue, } from "@chakra-ui/react"
 import Navbar from '../../../components/Navbar/Navbar'
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -18,10 +18,10 @@ const Transactions = () => {
     }, [token, success]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <Container maxW={'container.xl'} h={'100vh'} minH={'100vh'} mx={'auto'} pb={2}>
-            <Flex h={'100%'} flexDirection={'column'}>
+        <Container maxW={'container.xl'} h={'100vh'} minH={'100vh'} mx={'auto'} pb={2} >
+            <Flex h={'100%'} flexDirection={'column'} gap={2}>
                 <Navbar />
-                <Flex flexDirection={'column'} p={4} gap={2}>
+                <Flex flexDirection={'column'} p={4} gap={2} bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
                     <Flex align={'center'}>
                         <Text fontSize={'lg'} >Transactions</Text>
                     </Flex>

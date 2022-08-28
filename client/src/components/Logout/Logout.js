@@ -9,7 +9,6 @@ const Logout = () => {
         const navigate = useNavigate()
 
         const logOut = () => {
-
             dispatch(logout())
             navigate(`/${PublicRoutes.LOGIN}`, {replace: true})
         }

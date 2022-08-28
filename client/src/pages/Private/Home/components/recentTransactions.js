@@ -23,7 +23,7 @@ const RecentTransactions = () => {
         <Flex align={'center'}>
             <Text fontSize={'lg'} >Recent Transactions</Text>
             <Spacer />
-            <Link
+            {movements.length !== 0 && <Link
                 as={RouteLink}
                 to={'/private/transactions'}
                 fontWeight={'bold'}
@@ -33,7 +33,7 @@ const RecentTransactions = () => {
                 textTransform={'capitalize'}
                 >
                     View all
-            </Link>
+            </Link>}
         </Flex>
         {loading ? <Center h={'100%'}><Spinner /></Center> : movements.length !== 0 ? <TransactionsTable data={movements} allTransactions={false}/> : <Center h={'100%'}><Text>No transactions</Text></Center>}
     </Flex>

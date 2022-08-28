@@ -14,6 +14,7 @@ export const AuthEmptyState = {
   userInfo: {},
   loading: false,
   success: false,
+  loggedIn: false,
   error: null
 };
 
@@ -57,7 +58,8 @@ export const AuthSlice = createSlice({
   reducers: {
     logout: (state) => {
       clearLocalStorage("token");
-      return AuthEmptyState;
+      state.token = null
+      state.userInfo = {}
     },
     userInfo: (state, action) => {
       state.userInfo = action.payload;
@@ -67,18 +69,18 @@ export const AuthSlice = createSlice({
     [Login.pending]: (state) => {
       state.loading = true
       state.error = null
-      state.success = false
+      state.loggedIn = false
     },
     [Login.fulfilled]: (state, action ) => {
       state.token = action.payload
       state.loading = false
-      state.success = true
+      state.loggedIn = true
       state.error = false
     },
     [Login.rejected]: (state, action) => {
       state.loading = false
       state.error = true
-      state.success = false
+      state.loggedIn = false
     },
 
     [Register.pending]: (state) => {

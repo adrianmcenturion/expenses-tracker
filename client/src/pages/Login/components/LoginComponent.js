@@ -2,40 +2,44 @@ import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { Login } from '../../../redux/states/auth';
+import { Login, logout } from '../../../redux/states/auth';
 import { LoggedErrortoasts, Loggedtoasts} from '../../../components/toasts';
 import { useEffect, useState } from 'react';
-import { PrivateRoutes } from '../../../models/routes';
+import { PrivateRoutes, PublicRoutes } from '../../../models/routes';
+import { clearLocalStorage } from '../../../utils/LocalStorageFunctions';
 
   const LoginComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch()
-    const {loading, success, error, token } = useSelector((state) => state.auth)
+    const {loading, error} = useSelector((state) => state.auth)
     const toast = useToast()
+    const [loggedIn, setLoggedIn] = useState(useSelector((state) => state.auth))
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       const data = {email: e.target.email.value, password: e.target.password.value}
       dispatch(Login(data))
 
-      if (success) {
-        
+      console.log(loggedIn)
+      if(loggedIn) {
+        console.log('en el if')
         toast(Loggedtoasts())
         setTimeout(() => {
           navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}) 
-        }, 2500);
+        }, 1500);
       }
+      
       if (error) {
         toast(LoggedErrortoasts())
       }
     }
 
     useEffect(() => {
-      if (token) {
-        navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}) 
-      }
-    }, [navigate, token])
+      clearLocalStorage('token');
+      dispatch(logout());
+      navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
     
     
     return (

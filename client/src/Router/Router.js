@@ -19,8 +19,7 @@ const Router = () => {
     <Suspense fallback={<Spinner />}>
       <BrowserRouter>
         <RoutesNotFound>
-            <Route path="/" element={<Navigate to ={PrivateRoutes.PRIVATE} />} />
-            <Route path="*" element={<Login />} />
+            <Route path="/*" element={<Navigate to ={PrivateRoutes.PRIVATE} />} />
             <Route path={PublicRoutes.REGISTER} element={<Register />} />
             <Route path={PublicRoutes.LOGIN} element={<Login />} />
 
