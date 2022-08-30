@@ -21,9 +21,7 @@ import { clearLocalStorage } from '../../../utils/LocalStorageFunctions';
       const data = {email: e.target.email.value, password: e.target.password.value}
       dispatch(Login(data))
 
-      console.log(loggedIn)
       if(loggedIn) {
-        console.log('en el if')
         toast(Loggedtoasts())
         setTimeout(() => {
           navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}) 

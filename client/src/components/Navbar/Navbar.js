@@ -15,10 +15,10 @@ import { AdminRoutes, PrivateRoutes, PublicRoutes } from '../../models/routes';
 
     const NavLink = () => (
       <>
-      <Link as={RouteLink} to={`/${PrivateRoutes.HOME}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Dashboard</Link>
-      {rol === 'admin' && <Link as={RouteLink} to={`/${AdminRoutes.ADMIN}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Admin</Link>}
-      {token ? null : <Link as={RouteLink} to={`/${PublicRoutes.LOGIN}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Login</Link>}
-      {token ? null : <Link as={RouteLink} to={`/${PublicRoutes.REGISTER}`} replace={true} fontWeight={'bold'} px={2} py={1} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Register</Link>}
+      <Link as={RouteLink} to={`/${PrivateRoutes.HOME}`} replace={true} fontWeight={'bold'} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Dashboard</Link>
+      {rol === 'admin' && <Link as={RouteLink} to={`/${AdminRoutes.ADMIN}`} replace={true} fontWeight={'bold'} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Admin</Link>}
+      {token ? null : <Link as={RouteLink} to={`/${PublicRoutes.LOGIN}`} replace={true} fontWeight={'bold'} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Login</Link>}
+      {token ? null : <Link as={RouteLink} to={`/${PublicRoutes.REGISTER}`} replace={true} fontWeight={'bold'} rounded={'md'} _hover={{ textDecoration: 'none' }} textTransform={'capitalize'} >Register</Link>}
       </>
     );
   
@@ -26,7 +26,7 @@ import { AdminRoutes, PrivateRoutes, PublicRoutes } from '../../models/routes';
       <>
         <Box  id='home' bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
           <Container maxW={'container.lg'}>
-          <Flex w={'100%'} py={2} justifyContent={'space-between'}>
+          <Flex w={'100%'} py={2} justifyContent={'space-between'} gap={4}>
             <IconButton
                 size={'md'}
                 icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}

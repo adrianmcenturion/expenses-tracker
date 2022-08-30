@@ -10,6 +10,7 @@ export const ExpensesEmptyState = {
     categoryBalance: [],
     loading: false,
     success: false,
+    error: false
   };
 
 
@@ -18,17 +19,22 @@ export const ExpensesEmptyState = {
     'expenses/balance',
     // callback function
     async (token, thunkAPI) => {
-      const res = await AxiosInstance.get('/expenses/balance', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }  
-    }).then(
-      (response) => {
-        return response.data}
-    )
-    .catch((error) => error)
-    return res
-  })
+
+      try {
+        const res = await AxiosInstance.get('/expenses/balance', {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }  
+        })
+        
+        return res.data
+        
+      } catch (error) {
+
+        return thunkAPI.rejectWithValue(error.response.data.message)
+      }
+    })
+
 
 
   export const getMovements = createAsyncThunk(
@@ -36,16 +42,19 @@ export const ExpensesEmptyState = {
     'expenses',
     // callback function
     async (token, thunkAPI) => {
-      const res = await AxiosInstance.get('/expenses/', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }  
-    }).then(
-      (response) => {
-        return response.data}
-    )
-    .catch((error) => error)
-    return res
+
+      try {
+        const res = await AxiosInstance.get('/expenses/', {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }  
+      })
+      return res.data
+
+      } catch (error) {
+
+        return thunkAPI.rejectWithValue(error.response.data.message)
+      }
   })
 
 
@@ -54,16 +63,19 @@ export const ExpensesEmptyState = {
     'expenses/last',
     // callback function
     async (token, thunkAPI) => {
-      const res = await AxiosInstance.get('/expenses/last', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }  
-    }).then(
-      (response) => {
-        return response.data}
-    )
-    .catch((error) => error)
-    return res
+
+      try {
+        const res = await AxiosInstance.get('/expenses/last', {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }  
+      })
+      return res.data
+        
+      } catch (error) {
+
+        return thunkAPI.rejectWithValue(error.response.data.message)
+      }
   })
 
   export const addExpense = createAsyncThunk(
@@ -71,16 +83,18 @@ export const ExpensesEmptyState = {
     'expenses/add',
     // callback function
     async ({name, date, amount, category, type, token}, thunkAPI) => {
-      const res = await AxiosInstance.post('/expenses/create', { name, date, amount, category, type }, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }  
-    }).then(
-      (response) => {
-        return response.statusText}
-    )
-    .catch((error) => error)
-    return res
+
+      try {
+        const res = await AxiosInstance.post('/expenses/create', { name, date, amount, category, type }, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }  
+      })
+      return res.statusText
+      } catch (error) {
+
+        return thunkAPI.rejectWithValue(error.response.data.message)
+      }
   })
 
   export const getCategoryBalance = createAsyncThunk(
@@ -88,16 +102,18 @@ export const ExpensesEmptyState = {
     'expenses/balance/category',
     // callback function
     async (token, thunkAPI) => {
-      const res = await AxiosInstance.get('/expenses/balance/category', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }  
-    }).then(
-      (response) => {
-        return response.data}
-    )
-    .catch((error) => error)
-    return res
+
+      try {
+        const res = await AxiosInstance.get('/expenses/balance/category', {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }  
+      })
+      return res.data
+      } catch (error) {
+
+        return thunkAPI.rejectWithValue(error.response.data.message)
+      }
   })
 
   export const deleteExpenses = createAsyncThunk(
@@ -117,7 +133,7 @@ export const ExpensesEmptyState = {
     return
 
     } catch (error) {
-        return thunkAPI.rejectWithValue('Error when logging')
+      return thunkAPI.rejectWithValue('Error when logging')
     }
 })
 
@@ -127,16 +143,17 @@ export const updateExpense = createAsyncThunk(
   'expenses/update',
   // callback function
   async ({id, name, date, amount, category, type, token}, thunkAPI) => {
-    const res = await AxiosInstance.put('/expenses/update', { id, name, date, amount, category, type }, {
-      headers: {
-          Authorization: `Bearer ${token}`
-      }  
-  }).then(
-    (response) => {
-      return response.statusText}
-  )
-  .catch((error) => error)
-  return res
+
+    try {
+      const res = await AxiosInstance.put('/expenses/update', { id, name, date, amount, category, type }, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }  
+    })
+    return res.statusText
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message)
+    }
 })
 
 
@@ -153,6 +170,7 @@ export const updateExpense = createAsyncThunk(
     extraReducers: {
       [getBalance.pending]: (state) => {
         state.loading = true
+        state.error = false
       },
       [getBalance.fulfilled]: (state, action ) => {
         state.balance = action.payload.balance
@@ -160,75 +178,95 @@ export const updateExpense = createAsyncThunk(
         state.expense = action.payload.expense
         state.transactions = action.payload.transactions
         state.loading = false
+        state.error = false
       },
-      [getBalance.rejected]: (state) => {
+      [getBalance.rejected]: (state, action) => {
         state.loading = false
+        state.error = action.payload
       },
       [getMovements.pending]: (state) => {
         state.loading = true
+        state.error = false
       },
       [getMovements.fulfilled]: (state, action ) => {
         state.movements = action.payload
         state.loading = false
+        state.error = false
       },
-      [getMovements.rejected]: (state) => {
+      [getMovements.rejected]: (state, action) => {
         state.loading = false
+        state.error = action.payload
       },
       [getLastMovements.pending]: (state) => {
         state.loading = true
+        state.error = false
       },
       [getLastMovements.fulfilled]: (state, action ) => {
         state.movements = action.payload
         state.loading = false
+        state.error = false
       },
-      [getLastMovements.rejected]: (state) => {
+      [getLastMovements.rejected]: (state, action) => {
         state.loading = false
+        state.error = action.payload
       },
       [addExpense.pending]: (state) => {
         state.loading = true
         state.success = false
+        state.error = false
       },
       [addExpense.fulfilled]: (state, action ) => {
         state.loading = false
         state.success = true
+        state.error = false
       },
-      [addExpense.rejected]: (state) => {
+      [addExpense.rejected]: (state, action) => {
         state.loading = false
         state.success = false
+        state.error = action.payload
       },
       [getCategoryBalance.pending]: (state) => {
         state.loading = true
+        state.error = false
       },
       [getCategoryBalance.fulfilled]: (state, action ) => {
         state.categoryBalance = action.payload
         state.loading = false
+        state.error = false
       },
-      [getCategoryBalance.rejected]: (state) => {
+      [getCategoryBalance.rejected]: (state, action) => {
         state.loading = false
+        state.error = action.payload
       },
       [deleteExpenses.pending]: (state) => {
         state.loading = true
         state.success = false
+        state.error = false
       },
       [deleteExpenses.fulfilled]: (state ) => {
         state.loading = false
         state.success = true
+        state.error = false
       },
-      [deleteExpenses.rejected]: (state) => {
+      [deleteExpenses.rejected]: (state, action) => {
         state.loading = false
         state.success = false
+        state.error = action.payload
       },
       [updateExpense.pending]: (state) => {
         state.loading = true
         state.success = false
+        state.error = false
       },
       [updateExpense.fulfilled]: (state, action ) => {
         state.loading = false
         state.success = true
+        state.error = false
       },
-      [updateExpense.rejected]: (state) => {
+      [updateExpense.rejected]: (state, action) => {
         state.loading = false
         state.success = false
+        state.error = action.payload
       },
     }
   });

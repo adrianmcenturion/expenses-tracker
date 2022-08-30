@@ -14,7 +14,7 @@ const Logout = () => {
         }
     
   return (
-    <Button onClick={logOut}>Log Out</Button>
+    <Button variant='link' fontWeight={'bold'} _hover={{ textDecoration: 'none' }} onClick={logOut}>Logout</Button>
   )
 }
 export default Logout

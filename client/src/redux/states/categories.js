@@ -13,16 +13,18 @@ export const CategoryEmptyState = {
     'categories',
     // callback function
     async (token, thunkAPI) => {
-      const res = await AxiosInstance.get('/categories', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }  
-    }).then(
-      (response) => {
-        return response.data}
-    )
-    .catch((error) => error)
-    return res
+
+      try {
+        const res = await AxiosInstance.get('/categories', {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }  
+      })
+      return res.data
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+      }
+
   })
 
 

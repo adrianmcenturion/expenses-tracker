@@ -4,7 +4,7 @@ import { getCategoryBalance } from '../../../../redux/states/expenses';
 import { useDispatch, useSelector } from "react-redux";
 import { Flex, Text, Center, Spinner } from '@chakra-ui/react';
 
-const COLORS = ["#61efcd","#cdde1f","#fec200","#ca765a","#2485fa","#f57d7d","#c152d2","#8854d9","#3d4eb8","#00bcd7","#e53e3e","#6f1c3a","#21ae3b","#271fd0","#3f7d9c"];
+const COLORS = ["#008F7A","#C34A36","#936C00","#ca765a","#2485fa","#f57d7d","#c152d2","#8854d9","#3d4eb8","#00bcd7","#e53e3e","#6f1c3a","#21ae3b","#271fd0","#3f7d9c"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {

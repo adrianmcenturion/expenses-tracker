@@ -19,7 +19,7 @@ const RecentTransactions = () => {
     }, [token, success]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Flex flexDirection={'column'} p={4} gap={2}>
+    <Flex flexDirection={'column'} p={4} gap={2} overflow={'auto'}>
         <Flex align={'center'}>
             <Text fontSize={'lg'} >Recent Transactions</Text>
             <Spacer />
@@ -34,7 +34,7 @@ const RecentTransactions = () => {
                 >
                     View all
             </Link>}
-        </Flex>
+        </Flex >
         {loading ? <Center h={'100%'}><Spinner /></Center> : movements.length !== 0 ? <TransactionsTable data={movements} allTransactions={false}/> : <Center h={'100%'}><Text>No transactions</Text></Center>}
     </Flex>
     

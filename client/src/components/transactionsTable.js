@@ -14,7 +14,7 @@ const TransactionsTable = ({ data, allTransactions }) => {
 
   return (
     <>
-    <TableContainer >
+    <TableContainer>
       <Table size={{base:"sm", md: 'sm'}} textTransform="capitalize">
         <Thead>
           <Tr>

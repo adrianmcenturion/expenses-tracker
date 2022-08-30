@@ -1,8 +1,11 @@
 
-
 const AdminComponent = () => {
+
+  
   return (
-    <div>AdminComponent</div>
+    
+      <h1>asdasdasdasd</h1>
+    
   )
 }
 
