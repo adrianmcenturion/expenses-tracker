@@ -21,9 +21,9 @@ const Transactions = () => {
         <Container maxW={'container.xl'} h={'100vh'} minH={'100vh'} mx={'auto'} pb={2} >
             <Flex h={'100%'} flexDirection={'column'} gap={2}>
                 <Navbar />
-                <Flex flexDirection={'column'} p={4} gap={2} bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} overflow={'auto'}>
+                <Flex flexDirection={'column'} p={4} gap={2} bg={'rgba(0,0,0,0.025)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} overflow={'auto'}>
                     <Flex align={'center'}>
-                        <Text fontSize={'lg'} >Transactions</Text>
+                        <Text fontSize={'lg'} fontWeight={'bold'} >Transactions</Text>
                     </Flex>
                     {loading ? <AbsoluteCenter><Spinner /></AbsoluteCenter> : movements.length !== 0 ? <TransactionsTable data={movements} allTransactions={true}/> : <Center h={'100%'}><Text>No transactions</Text></Center>}
                 </Flex>

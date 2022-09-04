@@ -27,6 +27,7 @@ const RecentTransactions = () => {
                 as={RouteLink}
                 to={'/private/transactions'}
                 fontWeight={'bold'}
+                color={'blue.400'}
                 px={2}
                 py={1}
                 fontSize={{base: 'sm', md: 'md'}}

@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { mode } from "@chakra-ui/theme-tools"
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -15,6 +16,13 @@ const theme = extendTheme({
         },
       },
     },
+  },
+  styles: {
+    global: (props) => ({
+      "html, body": {
+        background: mode("#bbdefb", "#1D1C54")(props),  //mode(light mode color, dark mode color)
+      },
+    }),
   },
 });
 

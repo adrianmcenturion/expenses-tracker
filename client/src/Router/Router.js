@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import { lazy } from "react";
 import RoleGuard from "../guards/roleGuard";
 import { Roles } from "../models/roles";
-import { Spinner } from "@chakra-ui/react";
+import { Center, Spinner } from "@chakra-ui/react";
 
 const Login = lazy(() => import('../pages/Login/Login'))
 const Register = lazy(() => import('../pages/Register/Register'))
@@ -16,7 +16,7 @@ const Admin = lazy(() => import('../pages/Private/Admin/Admin'))
 const Router = () => {
 
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<Center h={'100vh'}><Spinner /></Center>}>
       <BrowserRouter>
         <RoutesNotFound>
             <Route path="/*" element={<Navigate to ={PrivateRoutes.PRIVATE} />} />

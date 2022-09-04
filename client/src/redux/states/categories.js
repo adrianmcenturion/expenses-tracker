@@ -27,7 +27,24 @@ export const CategoryEmptyState = {
 
   })
 
+  export const createCategories = createAsyncThunk(
+    //action type string
+    'categories/create',
+    // callback function
+    async ({name, type, token}, thunkAPI) => {
 
+      try {
+        const res = await AxiosInstance.post('/categories/create', {name, type}, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }  
+      })
+      return 
+      } catch (error) {
+        return thunkAPI.rejectWithValue(error)
+      }
+
+  })
 
 
 
@@ -47,6 +64,18 @@ export const CategoryEmptyState = {
       },
       [getCategories.rejected]: (state) => {
         state.loading = false
+      },
+      [createCategories.pending]: (state) => {
+        state.loading = true
+        state.success = false
+      },
+      [createCategories.fulfilled]: (state, action ) => {
+        state.loading = false
+        state.success = true
+      },
+      [createCategories.rejected]: (state) => {
+        state.loading = false
+        state.success = false
       },
     }
   });

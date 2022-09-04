@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, Link, Container, IconButton, Button, useDisclosure, useColorMode, useColorModeValue, Stack, Spacer } from '@chakra-ui/react';
+import { Box, Flex, HStack, Link, Container, IconButton, useDisclosure, useColorMode, useColorModeValue, Stack, Spacer } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Link as RouteLink } from "react-router-dom";
@@ -24,7 +24,7 @@ import { AdminRoutes, PrivateRoutes, PublicRoutes } from '../../models/routes';
   
     return (
       <>
-        <Box  id='home' bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
+        <Box  id='home' bg={'rgba(0,0,0,0.025)'} borderRadius={6} borderTop={false} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
           <Container maxW={'container.lg'}>
           <Flex w={'100%'} py={2} justifyContent={'space-between'} gap={4}>
             <IconButton
@@ -45,9 +45,7 @@ import { AdminRoutes, PrivateRoutes, PublicRoutes } from '../../models/routes';
               </HStack>
               <Spacer />
                   {token && <Logout />}
-                  <Button onClick={toggleColorMode}>
-                      {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
-                  </Button>
+                  <IconButton onClick={toggleColorMode} variant={'ghost'} icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}/>
             </Flex>
             </Container>
           

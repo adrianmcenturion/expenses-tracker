@@ -15,7 +15,6 @@ const Alert = () => {
 
   const handleOpenAlert = (e) => {
     setIdToDelete(Number(e.currentTarget.parentNode.parentNode.id))
-    console.log(idToDelete)
     onOpen()
   }
   
@@ -32,8 +31,8 @@ const Alert = () => {
       size={{ base: "10rem", md: "sm" }}
       p={1}
       borderRadius={{ base: "sm", md: "md" }}
-      bg={"red.700"}
-      _hover={{ bg: "red.500" }}
+      bg={"red.500"}
+      colorScheme='red'
       icon={<CloseIcon />}
     ></IconButton>
     <AlertDialog
@@ -55,7 +54,7 @@ const Alert = () => {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={handleDelete} ml={3} >
+              <Button colorScheme='red' bg={'red.500'} onClick={handleDelete} ml={3} >
                 Delete
               </Button>
             </AlertDialogFooter>

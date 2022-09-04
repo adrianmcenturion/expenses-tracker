@@ -43,10 +43,10 @@ const Layout = () => {
                         fontWeight="bold"
                         py={1}
                         >
-        <GridItem bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"dash"} display='grid' alignContent="center">
+        <GridItem bg={'rgba(0,0,0,0.025)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"dash"} display='grid' alignContent="center">
           <Dashboard />
         </GridItem>
-        <GridItem area={"balance"} display='grid' alignContent="center" bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} p={4}>
+        <GridItem area={"balance"} display='grid' alignContent="center" bg={'rgba(0,0,0,0.025)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} p={4}>
           <Flex gap={4} justifyContent='space-evenly' fontSize={{base:'xs', md: 'md'}}>
             <Box textAlign={'center'}>
               Income
@@ -54,22 +54,22 @@ const Layout = () => {
             </Box>
             <Box textAlign={'center'}>
               Expenses
-              <Text color={'red.400'}>${expense}</Text>
+              <Text color={'red.500'}>${expense}</Text>
             </Box>
             <Box textAlign={'center'}>
               Balance
-              <Text color={balance > 0 ? 'green.500' : 'red.400'}>${balance}</Text>
+              <Text color={balance > 0 ? 'green.500' : 'red.500'}>${balance}</Text>
             </Box>
             <Box textAlign={'center'}>
               Transactions
-              <Text color={'blue.400'}>{transactions}</Text>
+              <Text color={'blue.500'}>{transactions}</Text>
             </Box>
           </Flex>
         </GridItem>
-        <GridItem  bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"total-expenses-graph"} minH={'400px'} maxH='800px'>
+        <GridItem  bg={'rgba(0,0,0,0.025)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')} area={"total-expenses-graph"} minH={'400px'} maxH='800px'>
           <PieChartGraph />
         </GridItem>
-        <GridItem area={"recent-transactions"} display='grid' w='100%' bg={'rgba(0,0,0,0.15)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
+        <GridItem area={"recent-transactions"} display='grid' w='100%' bg={'rgba(0,0,0,0.025)'} borderRadius={6} border={'1px solid'} borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>
           <RecentTransactions />
         </GridItem>
       </Grid>

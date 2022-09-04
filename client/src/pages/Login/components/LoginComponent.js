@@ -1,12 +1,12 @@
-import { Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Link, Button, Heading, useColorModeValue, useToast, InputGroup, InputRightElement} from '@chakra-ui/react';
+import { Flex, Box, FormControl, FormLabel, Input, Stack, Link, Button, Heading, useColorModeValue, useToast, InputGroup, InputRightElement} from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { Login, logout } from '../../../redux/states/auth';
+import { Login } from '../../../redux/states/auth';
 import { LoggedErrortoasts, Loggedtoasts} from '../../../components/toasts';
-import { useEffect, useState } from 'react';
-import { PrivateRoutes, PublicRoutes } from '../../../models/routes';
-import { clearLocalStorage } from '../../../utils/LocalStorageFunctions';
+import { useState } from 'react';
+import { PrivateRoutes } from '../../../models/routes';
+
 
   const LoginComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -21,7 +21,7 @@ import { clearLocalStorage } from '../../../utils/LocalStorageFunctions';
       const data = {email: e.target.email.value, password: e.target.password.value}
       dispatch(Login(data))
 
-      if(loggedIn) {
+      if(loggedIn && !loading) {
         toast(Loggedtoasts())
         setTimeout(() => {
           navigate(`/${PrivateRoutes.PRIVATE}`, {replace: true}) 
@@ -33,11 +33,11 @@ import { clearLocalStorage } from '../../../utils/LocalStorageFunctions';
       }
     }
 
-    useEffect(() => {
-      clearLocalStorage('token');
-      dispatch(logout());
-      navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    // useEffect(() => {
+    //   clearLocalStorage('token');
+    //   dispatch(logout());
+    //   navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
+    // }, []); // eslint-disable-line react-hooks/exhaustive-deps
     
     
     return (
@@ -80,7 +80,6 @@ import { clearLocalStorage } from '../../../utils/LocalStorageFunctions';
                   direction={{ base: 'column', sm: 'row' }}
                   align={'start'}
                   justify={'space-between'}>
-                  <Checkbox borderColor={useColorModeValue('rgba(0,0,0,0.1)', 'rgba(255,255,255,0.1)')}>Remember me</Checkbox>
                   <Link as={RouteLink} to={'/register'} color={'blue.400'}>Don't have an account?</Link>
                 </Stack>
                 <Button
